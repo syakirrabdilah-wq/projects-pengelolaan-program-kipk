@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\AturanPrestasi;
 use App\Models\Mahasiswa;
+use App\Models\Notifikasi;
 use App\Models\Pengaturan;
 use App\Models\SemesterAkademik;
 use App\Models\User;
@@ -124,6 +125,35 @@ class PeringatanServiceTest extends TestCase
         Pengaturan::create(['kunci' => 'peringatan_batas_pencabutan', 'nilai' => '4']);
 
         $this->assertSame(4, $this->service->batasPencabutan());
+    }
+
+    public function test_peringatan_baru_di_bawah_ambang_hanya_memberi_notifikasi_ke_mahasiswa(): void
+    {
+        $mahasiswa = $this->mahasiswaDenganIpk([2.90]);
+
+        $this->service->evaluasi($mahasiswa);
+
+        $this->assertSame(1, Notifikasi::where('user_id', $mahasiswa->user_id)->count());
+        $this->assertSame(0, Notifikasi::whereIn('user_id', User::where('role', 'admin')->pluck('id'))->count());
+    }
+
+    public function test_tingkat_pencabutan_memberi_notifikasi_ke_mahasiswa_dan_semua_admin_tanpa_duplikasi(): void
+    {
+        $mahasiswa = $this->mahasiswaDenganIpk([2.90, 2.95, 2.80]);
+        $adminIds = User::where('role', 'admin')->pluck('id');
+
+        $this->service->evaluasi($mahasiswa);
+        $jumlahNotifikasi = Notifikasi::count();
+        $this->service->evaluasi($mahasiswa);
+
+        $this->assertSame($jumlahNotifikasi, Notifikasi::count());
+        $this->assertSame($adminIds->count(), Notifikasi::whereIn('user_id', $adminIds)->count());
+        $this->assertSame(3, Notifikasi::where('user_id', $mahasiswa->user_id)->count());
+        $this->assertSame('aktif', $mahasiswa->fresh()->status_kipk);
+        $this->assertDatabaseHas('notifikasi', [
+            'user_id' => $mahasiswa->user_id,
+            'isi' => 'Peringatan IPK tingkat 3: Anda memenuhi syarat pencabutan biaya KIP-K. Admin akan meninjau status Anda.',
+        ]);
     }
 
     private function mahasiswaDenganIpk(array $ipk): Mahasiswa

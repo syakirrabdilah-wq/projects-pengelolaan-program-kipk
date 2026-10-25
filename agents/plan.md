@@ -9,7 +9,7 @@
 | 0 | Persiapan | 3–4 hari | Repo, lingkungan, kerangka Laravel, skema database terpasang |
 | 1 | Autentikasi dan data penerima | 1 minggu | Login berperan, CRUD penerima, impor Excel |
 | 2 | Nilai akademik dan peringatan | 1–1,5 minggu | Input nilai + KHS oleh admin, aturan IPK, peringatan otomatis, tampilan nilai mahasiswa |
-| 3 | Pembinaan dan absensi | 1 minggu | Kegiatan, absensi dengan jendela waktu, rekap |
+| 3 | Pembinaan dan absensi | 1 minggu | Kegiatan, absensi dengan jendela waktu dan foto bertimestamp, rekap |
 | 4 | Dokumentasi mingguan | 1 minggu | Unggah foto, verifikasi admin, pengingat |
 | 5 | Dashboard, laporan, notifikasi | 1 minggu | Dashboard kedua peran, ekspor PDF/Excel |
 | 6 | Pengerasan dan rilis | 1 minggu | Pengujian menyeluruh, keamanan, deploy, backup |
@@ -56,11 +56,11 @@ Fase 0–4 menghasilkan MVP yang dapat dipakai: login, data penerima, nilai, per
 ## Fase 3 — Pembinaan dan absensi
 **Tujuan:** kehadiran tercatat online dengan aman.
 - CRUD kegiatan pembinaan dengan jam buka dan tutup.
-- Tombol absen mahasiswa dengan validasi jendela waktu dan satu kali per sesi.
+- Tombol absen mahasiswa dengan foto wajib, timestamp server, jendela waktu, dan satu kali per sesi.
 - Rekap kehadiran per kegiatan dan per mahasiswa.
-- Pengamanan absensi hanya jendela waktu (sudah diputuskan).
+- Pengamanan absensi memakai jendela waktu dan foto; tanpa kode sesi, QR, atau geolokasi.
 
-**Kriteria selesai:** absen di luar jam ditolak; absen ganda ditolak; rekap sesuai data.
+**Kriteria selesai:** absen di luar jam atau tanpa foto valid ditolak; admin wajib memakai foto untuk koreksi; timestamp berasal dari server; absen ganda ditolak; rekap sesuai data.
 
 ## Fase 4 — Dokumentasi mingguan
 **Tujuan:** bukti kegiatan mingguan terkumpul dan terverifikasi.
@@ -101,6 +101,5 @@ Fase 0–4 menghasilkan MVP yang dapat dipakai: login, data penerima, nilai, per
 | Item | Dampak | Rencana |
 |---|---|---|
 | Semester tanpa data (mis. cuti) memutus rangkaian berurutan | Fase 2 | Admin menginput semua semester; konfirmasi perlakuan khusus (Q-08) |
-| Perlakuan dokumentasi yang dikirim lewat tenggat belum jelas | Fase 4 | Asumsi: diterima dan ditandai terlambat; konfirmasi (Q-07) |
-| Absensi hanya jendela waktu, rawan titip absen | Fase 3 | Risiko diterima; tinjau ulang bila sering terjadi |
+| Foto absensi tidak membuktikan lokasi atau waktu pengambilan | Fase 3 | Waktu server dicatat saat file diterima; absensi tetap dibatasi jendela waktu |
 | Skala data nyata | Fase 6 | Uji dengan data simulasi ±500 mahasiswa |

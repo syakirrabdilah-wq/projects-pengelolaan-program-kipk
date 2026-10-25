@@ -38,7 +38,7 @@ Bagian kemahasiswaan perlu memantau penerima KIP-K (Kartu Indonesia Pintar Kulia
 - Input IPS, IPK, SKS, dan unggah KHS **oleh admin**; mahasiswa hanya melihat.
 - Aturan batas IPK minimal yang dapat diubah, dengan riwayat berlaku.
 - Peringatan otomatis dan notifikasi dalam aplikasi.
-- Kegiatan pembinaan, absensi online, dan rekap kehadiran.
+- Kegiatan pembinaan, absensi online berbukti foto bertimestamp server, dan rekap kehadiran.
 - Dokumentasi mingguan (unggah foto, verifikasi admin).
 - Dashboard untuk kedua peran dan laporan ekspor PDF/Excel.
 
@@ -49,7 +49,7 @@ Bagian kemahasiswaan perlu memantau penerima KIP-K (Kartu Indonesia Pintar Kulia
 - Integrasi dengan sistem akademik kampus atau sistem resmi KIP-K.
 - Aplikasi mobile native (cukup web responsif).
 - Pengajuan keberatan atas nilai atau peringatan di dalam sistem (ditangani di luar sistem lewat pesan pribadi WhatsApp).
-- Pengamanan absensi tambahan (kode sesi, QR, geolokasi); cukup jendela waktu.
+- Pengamanan absensi dengan kode sesi, QR, atau geolokasi; absensi memakai jendela waktu dan foto.
 
 ## 5. User stories
 
@@ -68,7 +68,7 @@ Bagian kemahasiswaan perlu memantau penerima KIP-K (Kartu Indonesia Pintar Kulia
 - **M1** Sebagai mahasiswa, saya ingin melihat IPS, IPK, SKS per semester dan KHS saya.
 - **M2** Sebagai mahasiswa, saya ingin melihat batas minimal prestasi dan posisi IPK saya terhadapnya.
 - **M3** Sebagai mahasiswa, saya ingin menerima peringatan otomatis bila IPK saya di bawah batas.
-- **M4** Sebagai mahasiswa, saya ingin melakukan absensi pembinaan dan melihat riwayat kehadiran saya.
+- **M4** Sebagai mahasiswa, saya ingin melakukan absensi pembinaan dengan foto kegiatan dan melihat riwayat kehadiran saya.
 - **M5** Sebagai mahasiswa, saya ingin mengunggah foto dokumentasi satu kali seminggu dan melihat status verifikasinya.
 
 ## 6. Kebutuhan fungsional
@@ -84,7 +84,7 @@ Bagian kemahasiswaan perlu memantau penerima KIP-K (Kartu Indonesia Pintar Kulia
 | FR-07 | Peringatan otomatis saat IPK < batas yang berlaku. Tingkat = urutan semester berturut-turut yang IPK-nya di bawah batas; tingkat 1-2 berupa pesan peringatan evaluasi, tingkat 3 ke atas ditandai pencabutan dan diberitahukan ke admin | Must | M3, A5 |
 | FR-08 | Notifikasi dalam aplikasi (peringatan, pengingat, hasil verifikasi) | Must | M3 |
 | FR-09 | CRUD kegiatan pembinaan dengan jam buka dan tutup absen | Must | A6 |
-| FR-10 | Absensi mahasiswa hanya saat sesi dibuka, satu kali per sesi | Must | M4 |
+| FR-10 | Absensi mahasiswa hanya saat sesi dibuka, satu kali per kegiatan, dan wajib menyertakan foto kegiatan | Must | M4 |
 | FR-11 | Rekap kehadiran per mahasiswa dan per kegiatan | Must | A6, M4 |
 | FR-12 | Unggah foto dokumentasi, satu kiriman per minggu per mahasiswa | Must | M5 |
 | FR-13 | Verifikasi dokumentasi (diterima/ditolak) beserta catatan | Must | A7 |
@@ -102,7 +102,7 @@ Bagian kemahasiswaan perlu memantau penerima KIP-K (Kartu Indonesia Pintar Kulia
 - **BR-02** Mahasiswa hanya dapat mengakses data miliknya sendiri.
 - **BR-03** Batas IPK awal 3,00. Evaluasi memakai aturan dengan `berlaku_mulai` terbaru yang tidak melewati tanggal hari ini.
 - **BR-04** Peringatan dibuat saat IPK semester yang disimpan < batas. Satu peringatan per mahasiswa per semester. Tingkat peringatan = urutan semester berturut-turut yang IPK-nya di bawah batas (berurutan). Rangkaian kembali ke nol bila IPK semester berikutnya memenuhi batas.
-- **BR-05** Absensi hanya diterima di antara `absen_buka` dan `absen_tutup`, dan hanya sekali per kegiatan.
+- **BR-05** Absensi hanya diterima di antara `absen_buka` dan `absen_tutup`, hanya sekali per kegiatan, dan wajib menyertakan foto JPG/PNG maksimal 5 MB. Waktu absensi dicatat server saat foto diterima; mahasiswa mengunggah saat absen dan admin mengunggah foto saat koreksi.
 - **BR-06** Dokumentasi: satu kiriman per mahasiswa per minggu (kombinasi tahun dan minggu ke-). Tenggat (hari dan jam) ditentukan admin di halaman Pengaturan; kiriman setelah tenggat ditandai terlambat.
 - **BR-07** KHS dan foto bersifat privat; hanya admin dan pemilik data yang boleh mengaksesnya.
 - **BR-08** Tingkat 1 dan 2: mahasiswa menerima pesan peringatan evaluasi. Tingkat 3 ke atas (batas dapat diatur): mahasiswa ditandai untuk pencabutan biaya KIP-K dan semua admin diberi tahu. Perubahan status menjadi `dicabut` dilakukan admin dengan konfirmasi.
@@ -115,7 +115,7 @@ Bagian kemahasiswaan perlu memantau penerima KIP-K (Kartu Indonesia Pintar Kulia
 | Keamanan | Password di-hash (bcrypt), HTTPS di produksi, proteksi CSRF dan XSS, otorisasi per peran, perlindungan data pribadi (NIM, KHS) |
 | Kinerja | Halaman utama dimuat < 3 detik pada koneksi seluler normal untuk ±500 mahasiswa |
 | Responsif | Sisi mahasiswa nyaman di layar ≥ 360 px |
-| Berkas | Foto JPG/PNG maks. 5 MB; KHS PDF maks. 5 MB |
+| Berkas | Foto dokumentasi dan absensi JPG/PNG maks. 5 MB; KHS PDF maks. 5 MB |
 | Ketersediaan data | Backup database berkala (harian disarankan) |
 | Kemudahan perawatan | Kode mengikuti `rules.md`; migrasi database terversi |
 
@@ -130,7 +130,7 @@ Bagian kemahasiswaan perlu memantau penerima KIP-K (Kartu Indonesia Pintar Kulia
 
 | Asumsi / risiko | Mitigasi |
 |---|---|
-| Absensi bisa dititipkan ke teman | Diputuskan memakai jendela waktu saja; risiko diterima dan dapat ditinjau ulang bila sering terjadi |
+| Foto absensi tidak membuktikan lokasi atau waktu pengambilan | Waktu server mencatat saat file diterima; absensi tetap dibatasi jendela waktu |
 | Data pribadi bocor | File privat, otorisasi di controller, HTTPS, akses admin terbatas |
 | Admin salah input nilai | Validasi rentang 0–4, konfirmasi sebelum simpan, riwayat perubahan |
 | Mahasiswa tidak punya koneksi stabil | Ukuran foto dikompres di sisi klien/server |
@@ -142,17 +142,17 @@ Bagian kemahasiswaan perlu memantau penerima KIP-K (Kartu Indonesia Pintar Kulia
 | No | Topik | Keputusan |
 |---|---|---|
 | 1 | Tenggat dokumentasi mingguan | Hari dan jam ditentukan pengelola (admin) lewat halaman Pengaturan di dashboard admin (FR-20) |
-| 2 | Pengamanan absensi | Cukup memakai jendela waktu (tanpa kode sesi, QR, atau geolokasi) |
+| 2 | Pengamanan absensi | Diperbarui 2026-10-25: jendela waktu dan foto kegiatan wajib; mahasiswa mengunggah saat absen, admin wajib mengunggah foto saat koreksi; timestamp berasal dari waktu server saat menerima foto; tanpa kode sesi, QR, atau geolokasi |
 | 3 | Aturan peringatan | IPK di bawah standar 1x dan 2x: pesan peringatan evaluasi. Pencabutan biaya KIP-K mulai kejadian ke-3 dan dikonfirmasi admin. Kejadian dihitung **berurutan** (semester berturut-turut) |
 | 4 | Jumlah admin | Tiga admin |
 | 5 | Keberatan nilai atau peringatan | Tidak ada fitur di sistem; mahasiswa menyampaikannya lewat pesan pribadi WhatsApp |
+| 6 | Dokumentasi setelah tenggat mingguan | Tetap diterima dan ditandai terlambat, dibandingkan dengan hari dan jam tenggat di Pengaturan (T-408, 2026-10-25) |
 
 ### Asumsi sementara (menunggu konfirmasi)
 
-1. Perlakuan dokumentasi yang dikirim di luar tenggat belum jelas. Jawaban terakhir menyebut dua kemungkinan ("diterima dan ditandai terlambat" atau "ditolak") tanpa memilih. Sementara dipakai: tetap diterima dan ditandai terlambat.
-2. Kata "evakuasi" pada jawaban pemilik proyek dibaca sebagai "evaluasi".
-3. Nilai awal tenggat (Minggu 23.59) hanya default dan dapat diubah admin kapan saja.
-4. Semester yang tidak punya data (misalnya cuti dan belum diinput) memutus rangkaian berurutan; admin menginput data semua semester.
+1. Kata "evakuasi" pada jawaban pemilik proyek dibaca sebagai "evaluasi".
+2. Nilai awal tenggat (Minggu 23.59) hanya default dan dapat diubah admin kapan saja.
+3. Semester yang tidak punya data (misalnya cuti dan belum diinput) memutus rangkaian berurutan; admin menginput data semua semester.
 
 ### Pertanyaan terbuka
-Konfirmasi asumsi 1 (lihat Q-07 di `agents/task.md`) dan asumsi 4 (Q-08).
+Konfirmasi asumsi 3 (lihat Q-08 di `agents/task.md`).

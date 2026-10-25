@@ -8,11 +8,15 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Concerns\RemembersChunkOffset;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class PenerimaImport implements ToCollection, WithHeadingRow
+class PenerimaImport implements ToCollection, WithChunkReading, WithHeadingRow
 {
+    use RemembersChunkOffset;
+
     public int $berhasil = 0;
 
     /** @var array<int, array{baris: int, pesan: array<int, string>}> */
@@ -48,7 +52,7 @@ class PenerimaImport implements ToCollection, WithHeadingRow
 
             if ($validator->fails()) {
                 $this->galat[] = [
-                    'baris' => $index + 2,
+                    'baris' => ($this->getChunkOffset() ?? 1) + $index,
                     'pesan' => array_values($validator->errors()->all()),
                 ];
 
@@ -76,5 +80,10 @@ class PenerimaImport implements ToCollection, WithHeadingRow
 
             $this->berhasil++;
         }
+    }
+
+    public function chunkSize(): int
+    {
+        return (int) config('imports.penerima_chunk_size', 500);
     }
 }

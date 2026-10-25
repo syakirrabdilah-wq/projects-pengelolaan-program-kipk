@@ -36,13 +36,13 @@
     </div>
 </div>
 <div class="mb-3">
-    <label class="form-label" for="password">{{ isset($penerima) ? 'Password baru (opsional)' : 'Password awal akun' }}</label>
+    <label class="form-label" for="password">{{ isset($penerima) ? 'Kata sandi baru (opsional)' : 'Kata sandi awal akun' }}</label>
     <input id="password" name="password" type="password" minlength="8" @required(! isset($penerima)) class="form-control @error('password') is-invalid @enderror" autocomplete="new-password">
     @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
 </div>
 <button class="btn btn-primary">Simpan</button>
 <a href="{{ route('admin.penerima.index') }}" class="btn btn-outline-secondary">Batal</a>
-<script>
+<script nonce="{{ request()->attributes->get('csp_nonce') }}">
     document.getElementById('status_kipk').addEventListener('change', function () {
         document.getElementById('konfirmasi-pencabutan').classList.toggle('d-none', this.value !== 'dicabut');
     });

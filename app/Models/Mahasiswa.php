@@ -40,4 +40,14 @@ class Mahasiswa extends Model
     {
         return $this->hasMany(Peringatan::class);
     }
+
+    public function absensi(): HasMany
+    {
+        return $this->hasMany(Absensi::class);
+    }
+
+    public function dokumentasiMingguan(): HasMany
+    {
+        return $this->hasMany(DokumentasiMingguan::class, 'mahasiswa_id');
+    }
 }

@@ -10,9 +10,11 @@ use Illuminate\Support\Collection;
 
 class PeringatanService
 {
+    public function __construct(private NotifikasiService $notifikasiService) {}
+
     /**
      * Evaluate every stored semester and synchronize its warning rows.
-     * Notifications are intentionally handled by the later T-205 work.
+     * Notify users only when a warning first appears or reaches the configured threshold.
      *
      * @return Collection<int, Peringatan>
      */
@@ -20,6 +22,10 @@ class PeringatanService
     {
         $batasPencabutan = $this->batasPencabutan();
         $semesterList = $mahasiswa->semester()->orderBy('semester_ke')->get();
+        $existingWarnings = Peringatan::query()
+            ->where('mahasiswa_id', $mahasiswa->id)
+            ->get()
+            ->keyBy('semester_id');
         $expected = [];
         $rangkaian = 0;
         $semesterSebelumnya = null;
@@ -63,11 +69,18 @@ class PeringatanService
 
         $warnings = collect();
         foreach ($expected as $attributes) {
+            $existing = $existingWarnings->get($attributes['semester_id']);
+            $sebelumnyaMemenuhiBatas = $existing && $existing->tingkat >= $batasPencabutan;
             $warning = Peringatan::updateOrCreate(
                 ['mahasiswa_id' => $mahasiswa->id, 'semester_id' => $attributes['semester_id']],
                 $attributes,
             );
             $warning->setAttribute('memenuhi_batas_pencabutan', $warning->tingkat >= $batasPencabutan);
+
+            if (! $existing || (! $sebelumnyaMemenuhiBatas && $warning->tingkat >= $batasPencabutan)) {
+                $this->notifikasiService->peringatan($warning, $batasPencabutan);
+            }
+
             $warnings->push($warning);
         }
 
