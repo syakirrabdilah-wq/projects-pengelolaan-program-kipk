@@ -21,8 +21,9 @@
 </div>
 <div class="mb-3">
     <label class="form-label" for="file_khs">KHS PDF (maks. 5 MB) {{ isset($semester) && $semester->file_khs ? '— kosongkan jika tidak mengganti' : '' }}</label>
-    <input id="file_khs" name="file_khs" type="file" accept="application/pdf,.pdf" class="form-control @error('file_khs') is-invalid @enderror">
+    <input id="file_khs" name="file_khs" type="file" accept="application/pdf,.pdf" data-file-name-target="nama-file-khs" class="form-control @error('file_khs') is-invalid @enderror">
     @error('file_khs')<div class="invalid-feedback">{{ $message }}</div>@enderror
+    <div class="upload-file-summary mt-2" id="nama-file-khs" role="status">Belum ada berkas dipilih.</div>
 </div>
-<button class="btn btn-primary" onclick="return confirm('Simpan perubahan nilai semester ini?')">Simpan nilai</button>
+<button class="btn btn-primary">Simpan nilai</button>
 <a class="btn btn-outline-secondary" href="{{ route('admin.penerima.nilai.index', $penerima) }}">Batal</a>

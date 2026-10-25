@@ -143,6 +143,7 @@ class PenerimaTest extends TestCase
 
     public function test_impor_menyimpan_baris_valid_dan_melaporkan_galat_per_baris(): void
     {
+        config(['imports.penerima_chunk_size' => 2]);
         $admin = User::factory()->create(['role' => 'admin']);
         $csv = implode("\n", [
             'nim,nama,prodi,angkatan,status_kipk,password',

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard admin — Sistem Manajemen Penerima KIP-K</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/theme.css" rel="stylesheet">
+  <style>
+    .admin-sidebar .brand-row { min-height: 76px; margin-bottom: .75rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, .2); }
+    .dashboard-page-hero { margin-bottom: 1.25rem; }
+    .dashboard-page-hero .title-rule { margin-top: .85rem; margin-bottom: 0; }
+    .dashboard-footer { margin-top: 1.5rem; border-top: 1px solid #d8eadc; }
+    .dashboard-summary { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; }
+    .dashboard-summary .stat-card { height: 100%; }
+    .dashboard-summary .small-label { display: block; min-height: 2.5em; }
+    .dashboard-charts { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 1rem; }
+    .dashboard-charts .card { min-width: 0; }
+    @media (max-width: 1199.98px) {
+      .dashboard-summary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .dashboard-charts { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 767.98px) {
+      .dashboard-summary { grid-template-columns: 1fr; gap: .75rem; }
+      .dashboard-summary .stat-card { min-height: 96px; }
+      .dashboard-summary .small-label { min-height: 0; }
+      .dashboard-charts { grid-template-columns: 1fr; }
+      .chart-wrap { min-height: 245px; }
+    }
+  </style>
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <a class="brand-row" href="index.html"><span class="brand-name">Sistem Manajemen Penerima KIP-K<span class="brand-caption">Panel Kemahasiswaan</span></span></a>
+    <div class="sidebar-label">Menu utama</div>
+    <nav class="sidebar-nav" aria-label="Navigasi admin">
+      <a class="sidebar-link active" href="admin-dashboard.html" aria-current="page"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="5" rx="1"/><rect x="13" y="10" width="8" height="11" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/></svg>Dashboard</a>
+      <a class="sidebar-link" href="admin-penerima.html"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20v-1a6 6 0 0 1 12 0v1m2-10a3 3 0 1 0 0-6m2 9a5 5 0 0 1 3 5v1"/></svg>Data penerima</a>
+      <a class="sidebar-link" href="admin-nilai.html"><svg viewBox="0 0 24 24"><path d="M4 4h6a4 4 0 0 1 4 4v12a4 4 0 0 0-4-4H4zM20 4h-2a4 4 0 0 0-4 4v12a4 4 0 0 1 4-4h2z"/></svg>Nilai akademik</a>
+      <a class="sidebar-link" href="admin-aturan.html"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16M8 3v4m8 3v4m-5 3v4"/></svg>Aturan prestasi</a>
+      <a class="sidebar-link" href="admin-peringatan.html"><svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9m-8 12h4"/></svg>Peringatan</a>
+      <a class="sidebar-link" href="admin-kegiatan.html"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18m-13 4h3m-3 3h7"/></svg>Kegiatan pembinaan</a>
+      <a class="sidebar-link" href="admin-verifikasi.html"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 12l2.5 2.5L16 9"/></svg>Verifikasi dokumentasi</a>
+      <a class="sidebar-link" href="admin-laporan.html"><svg viewBox="0 0 24 24"><path d="M4 19V5m0 14h17M8 15l3-4 3 2 5-7"/></svg>Laporan</a>
+      <a class="sidebar-link" href="admin-akun.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Akun</a>
+      <a class="sidebar-link" href="admin-pengaturan.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.6-.2.1-1.3.8-.3 1.8h-2.8l-.3-1.8-1.5-.9-1.7.6-1.4-2.4 1.4-1.1v-1.8L6.3 12l1.4-2.4 1.7.6 1.5-.9.3-1.8H14l.3 1.8 1.5.9 1.7-.6 1.4 2.4-1.4 1.1z"/></svg>Pengaturan</a>
+    </nav>
+    <div class="sidebar-bottom">Tahun Akademik 2026/2027<br>Bagian Kemahasiswaan</div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <a href="admin-verifikasi.html" class="text-decoration-none text-success me-2">Notifikasi <span class="badge text-bg-success">4</span></a>
+      <a class="user-menu" href="admin-akun.html"><span class="avatar">SA</span><span><strong>Staf Admin</strong><small class="d-block text-secondary">Administrator</small></span></a>
+    </header>
+    <div class="admin-content">
+      <section class="page-hero dashboard-page-hero" aria-labelledby="dashboard-title">
+        <p class="small-label text-success mb-1">RINGKASAN KEMAHASISWAAN</p>
+        <h1 id="dashboard-title">Dashboard</h1>
+        <p class="text-secondary mb-0">Selamat pagi. Berikut ringkasan 120 penerima KIP-K per 25 Oktober 2026.</p>
+        <hr class="title-rule">
+      </section>
+
+      <!-- DATA DINAMIS: angka ringkasan dihitung dari data penerima, peringatan, dan dokumentasi. -->
+      <section class="dashboard-summary content-section" aria-label="Ringkasan penerima">
+        <article class="card stat-card"><div><span class="small-label">Total penerima</span><strong class="stat-value">120</strong><span class="small text-secondary">seluruh angkatan</span></div><span class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M3 20v-1a6 6 0 0 1 12 0v1m2-10a3 3 0 1 0 0-6m2 9a5 5 0 0 1 3 5v1"/></svg></span></article>
+        <article class="card stat-card"><div><span class="small-label">Aktif</span><strong class="stat-value">104</strong><span class="small text-secondary">penerima berstatus aktif</span></div><span class="status-badge status-good">✓ Aktif</span></article>
+        <article class="card stat-card"><div><span class="small-label">Dalam peringatan</span><strong class="stat-value">12</strong><span class="small text-secondary">perlu dipantau</span></div><span class="status-badge status-wait">◷ Perlu tinjauan</span></article>
+        <article class="card stat-card"><div><span class="small-label">Memenuhi syarat pencabutan</span><strong class="stat-value">3</strong><span class="small text-secondary">menunggu keputusan admin</span></div><span class="status-badge status-bad">! Perlu keputusan</span></article>
+        <article class="card stat-card"><div><span class="small-label">Belum kirim dokumentasi</span><strong class="stat-value">17</strong><span class="small text-secondary">belum mengirim minggu ini</span></div><span class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18m-12 4h6"/></svg></span></article>
+      </section>
+
+      <section class="dashboard-charts content-section" aria-label="Grafik penerima">
+        <article class="card">
+          <div class="card-header p-3"><h2 class="h5 mb-1">Penerima per program studi</h2><p class="small text-secondary mb-0">Jumlah mahasiswa dari seluruh 120 penerima</p></div>
+          <div class="card-body"><div class="chart-wrap"><canvas id="prodiChart" role="img" aria-label="Grafik batang jumlah penerima per program studi"></canvas></div></div>
+        </article>
+        <article class="card">
+          <div class="card-header p-3"><h2 class="h5 mb-1">Penerima per angkatan</h2><p class="small text-secondary mb-0">Sebaran berdasarkan tahun masuk</p></div>
+          <div class="card-body"><div class="chart-wrap"><canvas id="angkatanChart" role="img" aria-label="Grafik garis jumlah penerima per angkatan"></canvas></div></div>
+        </article>
+      </section>
+
+      <section class="content-section" aria-labelledby="attention-title">
+        <div class="section-heading">
+          <div><h2 id="attention-title">Mahasiswa perlu perhatian</h2><p class="text-secondary mb-0">Contoh data fiktif untuk prototipe.</p></div>
+          <a class="btn btn-outline-primary btn-sm" href="admin-penerima.html">Lihat semua penerima</a>
+        </div>
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table table-striped mb-0">
+              <thead><tr><th scope="col">Nama</th><th scope="col">NIM</th><th scope="col">Prodi</th><th scope="col">Masalah</th><th scope="col"><span class="visually-hidden">Aksi</span></th></tr></thead>
+              <tbody>
+                <!-- DATA DINAMIS: tampilkan mahasiswa dengan kondisi yang perlu ditinjau; identitas di bawah fiktif. -->
+                <tr><td><strong>Aditya Pratama</strong></td><td>231041042</td><td>Teknik Informatika</td><td><span class="status-badge status-bad">! IPK di bawah batas</span></td><td><a href="admin-peringatan.html" class="btn btn-sm btn-outline-primary">Lihat</a></td></tr>
+                <tr><td><strong>Salma Nuraini</strong></td><td>241020317</td><td>Manajemen</td><td><span class="status-badge status-wait">◷ Kehadiran rendah</span></td><td><a href="admin-kegiatan.html" class="btn btn-sm btn-outline-primary">Lihat</a></td></tr>
+                <tr><td><strong>Bagas Ramadhan</strong></td><td>221031875</td><td>Pendidikan Matematika</td><td><span class="status-badge status-neutral">Belum kirim dokumentasi</span></td><td><a href="admin-verifikasi.html" class="btn btn-sm btn-outline-primary">Lihat</a></td></tr>
+                <tr><td><strong>Rani Oktaviani</strong></td><td>231050624</td><td>Akuntansi</td><td><span class="status-badge status-bad">! IPK di bawah batas</span></td><td><a href="admin-peringatan.html" class="btn btn-sm btn-outline-primary">Lihat</a></td></tr>
+                <tr><td><strong>Fajar Maulana</strong></td><td>241060118</td><td>Ilmu Komunikasi</td><td><span class="status-badge status-wait">◷ Kehadiran rendah</span></td><td><a href="admin-kegiatan.html" class="btn btn-sm btn-outline-primary">Lihat</a></td></tr>
+                <tr><td><strong>Intan Permata Sari</strong></td><td>251010283</td><td>Keperawatan</td><td><span class="status-badge status-neutral">Belum kirim dokumentasi</span></td><td><a href="admin-verifikasi.html" class="btn btn-sm btn-outline-primary">Lihat</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <footer class="page-footer dashboard-footer">Bagian Kemahasiswaan · Tahun Akademik 2026/2027 · kemahasiswaan@kampus.ac.id</footer>
+    </div>
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script>
+const chartText = '#4b5563';
+const chartGrid = '#e7f1e9';
+new Chart(document.getElementById('prodiChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Teknik Informatika', 'Manajemen', 'Pendidikan Matematika', 'Akuntansi', 'Keperawatan', 'Ilmu Komunikasi'],
+    datasets: [{ label: 'Jumlah penerima', data: [30, 24, 22, 18, 14, 12], backgroundColor: '#15803d', borderRadius: 5, maxBarThickness: 44 }]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0, color: chartText }, grid: { color: chartGrid } }, x: { ticks: { color: chartText, maxRotation: 35, minRotation: 0 }, grid: { display: false } } } }
+});
+new Chart(document.getElementById('angkatanChart'), {
+  type: 'line',
+  data: {
+    labels: ['2022', '2023', '2024', '2025'],
+    datasets: [{ label: 'Jumlah penerima', data: [18, 32, 38, 32], borderColor: '#15803d', backgroundColor: 'rgba(21, 128, 61, .12)', pointBackgroundColor: '#14532d', pointRadius: 5, pointHoverRadius: 7, fill: true, tension: .3 }]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: chartText } } }, scales: { y: { beginAtZero: true, ticks: { precision: 0, color: chartText }, grid: { color: chartGrid } }, x: { ticks: { color: chartText }, grid: { display: false } } } }
+});
+</script>
+</body>
+</html>

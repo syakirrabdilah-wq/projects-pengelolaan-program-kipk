@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kegiatan pembinaan — Sistem Manajemen Penerima KIP-K</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/theme.css" rel="stylesheet">
+  <style>
+    .activity-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .time-window { display: flex; flex-wrap: wrap; gap: .25rem; white-space: nowrap; }
+    .activity-dialog { width: min(560px, calc(100vw - 2rem)); max-width: none; padding: 0; border: 0; border-radius: .75rem; box-shadow: 0 16px 60px rgba(20, 83, 45, .24); }
+    .activity-dialog::backdrop { background: rgba(17, 24, 39, .58); }
+    .dialog-head, .dialog-body, .dialog-foot { padding: 1.25rem; }
+    .dialog-head { border-bottom: 1px solid #e5f3e8; }
+    .dialog-foot { display: flex; justify-content: flex-end; gap: .6rem; border-top: 1px solid #e5f3e8; }
+    @media (max-width: 991.98px) { .activity-form-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 767.98px) {
+      .activity-form-grid { gap: .75rem; }
+      .dialog-head, .dialog-body, .dialog-foot { padding: 1rem; }
+      .dialog-foot .btn { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <a class="brand-row" href="index.html"><span class="brand-name">Sistem Manajemen Penerima KIP-K<span class="brand-caption">Panel Kemahasiswaan</span></span></a>
+    <div class="sidebar-label">Menu utama</div>
+    <nav class="sidebar-nav" aria-label="Navigasi admin">
+      <a class="sidebar-link" href="admin-dashboard.html">Dashboard</a><a class="sidebar-link" href="admin-penerima.html">Data penerima</a><a class="sidebar-link" href="admin-nilai.html">Nilai akademik</a><a class="sidebar-link" href="admin-aturan.html">Aturan prestasi</a><a class="sidebar-link" href="admin-peringatan.html">Peringatan</a><a class="sidebar-link active" href="admin-kegiatan.html" aria-current="page">Kegiatan pembinaan</a><a class="sidebar-link" href="admin-verifikasi.html">Verifikasi dokumentasi</a><a class="sidebar-link" href="admin-laporan.html">Laporan</a><a class="sidebar-link" href="admin-akun.html">Akun</a><a class="sidebar-link" href="admin-pengaturan.html">Pengaturan</a>
+    </nav>
+    <div class="sidebar-bottom">Tahun Akademik 2026/2027<br>Bagian Kemahasiswaan</div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar"><a href="admin-verifikasi.html" class="text-decoration-none text-success me-2">Notifikasi <span class="badge text-bg-success">4</span></a><a class="user-menu" href="admin-akun.html"><span class="avatar">SA</span><span><strong>Staf Admin</strong><small class="d-block text-secondary">Administrator</small></span></a></header>
+    <div class="admin-content">
+      <section class="page-hero" aria-labelledby="page-title">
+        <p class="small-label text-success mb-1">PEMBINAAN</p><h1 id="page-title">Kegiatan pembinaan</h1>
+        <p class="text-secondary mb-0">Atur jadwal absen dan tinjau rekap kehadiran mahasiswa aktif.</p><hr class="title-rule">
+      </section>
+
+      <div class="d-flex justify-content-end content-section"><a href="#form-buat" class="btn btn-primary">+ Buat kegiatan</a></div>
+
+      <section class="content-section" aria-labelledby="activity-list-title">
+        <div class="section-heading"><div><h2 id="activity-list-title">Daftar kegiatan</h2><p class="small text-secondary mb-0">Status mengikuti waktu buka dan tutup absen zona Asia/Jakarta.</p></div><span class="status-badge status-neutral">3 kegiatan</span></div>
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table table-striped mb-0">
+              <thead><tr><th scope="col">Judul</th><th scope="col">Tanggal</th><th scope="col">Jam buka absen</th><th scope="col">Jam tutup absen</th><th scope="col">Status</th><th scope="col">Jumlah hadir</th><th scope="col">Aksi</th></tr></thead>
+              <tbody>
+                <!-- DATA DINAMIS: status kegiatan dihitung dari waktu saat ini di zona waktu aplikasi. -->
+                <tr><td><strong>Klinik Belajar Tengah Semester</strong></td><td>28 Okt 2026</td><td>13.00 WIB</td><td>14.00 WIB</td><td><span class="status-badge status-neutral">○ Belum dibuka</span></td><td>—</td><td><div class="table-actions"><a href="#form-ubah" class="btn btn-sm btn-outline-primary">Ubah</a><a href="#rekap" class="btn btn-sm btn-outline-secondary">Rekap</a></div></td></tr>
+                <tr><td><strong>Diskusi Strategi Belajar</strong></td><td>25 Okt 2026</td><td>09.00 WIB</td><td>10.30 WIB</td><td><span class="status-badge status-wait">◷ Sedang dibuka</span></td><td>68 hadir</td><td><div class="table-actions"><a href="#form-ubah" class="btn btn-sm btn-outline-primary">Ubah</a><a href="#rekap" class="btn btn-sm btn-outline-secondary">Rekap</a></div></td></tr>
+                <tr><td><strong>Manajemen Waktu Kuliah</strong></td><td>21 Okt 2026</td><td>09.00 WIB</td><td>10.30 WIB</td><td><span class="status-badge status-good">✓ Ditutup</span></td><td>83 hadir</td><td><div class="table-actions"><a href="#form-ubah" class="btn btn-sm btn-outline-primary">Ubah</a><a href="#rekap" class="btn btn-sm btn-outline-secondary">Rekap</a></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section" aria-labelledby="forms-title">
+        <div class="section-heading"><div><h2 id="forms-title">Buat atau ubah kegiatan</h2><p class="small text-secondary mb-0">Waktu tutup absen harus setelah waktu buka.</p></div></div>
+        <div class="activity-form-grid">
+          <article class="card" id="form-buat">
+            <div class="card-header p-3"><h3 class="h5 mb-0">Buat kegiatan</h3></div>
+            <div class="card-body">
+              <!-- DATA DINAMIS: pembuat kegiatan diambil dari sesi admin. -->
+              <form class="activity-form row g-3" action="#" method="post" novalidate>
+                <div class="col-12"><label class="form-label" for="judul-buat">Judul</label><input class="form-control" id="judul-buat" name="judul" placeholder="Contoh: Klinik belajar semester ganjil" required><div class="invalid-feedback">Masukkan judul kegiatan.</div></div>
+                <div class="col-12"><label class="form-label" for="tanggal-buat">Tanggal</label><input class="form-control" id="tanggal-buat" name="tanggal" type="date" required><div class="invalid-feedback">Pilih tanggal kegiatan.</div></div>
+                <div class="col-md-6"><label class="form-label" for="buka-buat">Absen dibuka</label><input class="form-control open-time" id="buka-buat" name="absen_buka" type="datetime-local" required><div class="invalid-feedback">Pilih waktu buka absen.</div></div>
+                <div class="col-md-6"><label class="form-label" for="tutup-buat">Absen ditutup</label><input class="form-control close-time" id="tutup-buat" name="absen_tutup" type="datetime-local" required aria-describedby="tutup-buat-error"><div class="invalid-feedback" id="tutup-buat-error">Waktu tutup harus setelah waktu buka.</div></div>
+                <div class="col-12"><p class="form-text mb-0">Waktu absen menggunakan zona waktu aplikasi (Asia/Jakarta).</p></div>
+                <div class="col-12"><button class="btn btn-primary w-100" type="submit">Simpan kegiatan</button></div>
+              </form>
+            </div>
+          </article>
+
+          <article class="card" id="form-ubah">
+            <div class="card-header p-3"><h3 class="h5 mb-0">Ubah kegiatan</h3></div>
+            <div class="card-body">
+              <!-- DATA DINAMIS: formulir terisi dari kegiatan yang dipilih admin. -->
+              <form class="activity-form row g-3" action="#" method="post" novalidate>
+                <div class="col-12"><label class="form-label" for="judul-ubah">Judul</label><input class="form-control" id="judul-ubah" name="judul" value="Klinik Belajar Tengah Semester" required><div class="invalid-feedback">Masukkan judul kegiatan.</div></div>
+                <div class="col-12"><label class="form-label" for="tanggal-ubah">Tanggal</label><input class="form-control" id="tanggal-ubah" name="tanggal" type="date" value="2026-10-28" required><div class="invalid-feedback">Pilih tanggal kegiatan.</div></div>
+                <div class="col-md-6"><label class="form-label" for="buka-ubah">Absen dibuka</label><input class="form-control open-time" id="buka-ubah" name="absen_buka" type="datetime-local" value="2026-10-28T13:00" required><div class="invalid-feedback">Pilih waktu buka absen.</div></div>
+                <div class="col-md-6"><label class="form-label" for="tutup-ubah">Absen ditutup</label><input class="form-control close-time is-invalid" id="tutup-ubah" name="absen_tutup" type="datetime-local" value="2026-10-28T12:30" required aria-invalid="true" aria-describedby="tutup-ubah-error"><div class="invalid-feedback d-block" id="tutup-ubah-error">Waktu tutup harus setelah waktu buka.</div></div>
+                <div class="col-12"><button class="btn btn-outline-primary w-100" type="submit">Simpan perubahan</button></div>
+              </form>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-section" id="rekap" aria-labelledby="recap-title">
+        <div class="section-heading"><div><h2 id="recap-title">Rekap kegiatan: Manajemen Waktu Kuliah</h2><p class="small text-secondary mb-0">21 Oktober 2026 · Daftar dipaginasi untuk seluruh 104 mahasiswa aktif.</p></div><span class="status-badge status-neutral">Contoh 4 baris · halaman 1 dari 7</span></div>
+        <div class="notice mb-3"><span class="notice-icon">i</span><span>Mahasiswa aktif tanpa catatan absensi ditampilkan sebagai <strong>Tidak hadir</strong>. Koreksi admin memerlukan foto kegiatan dan dicatat dengan waktu server secara real-time.</span></div>
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table table-striped mb-0">
+              <thead><tr><th scope="col">Nama</th><th scope="col">NIM</th><th scope="col">Waktu absen</th><th scope="col">Status</th><th scope="col">Aksi</th></tr></thead>
+              <tbody>
+                <!-- DATA DINAMIS: paginasi meliputi semua mahasiswa aktif; baris tanpa absensi berstatus Tidak hadir. -->
+                <tr><td><strong>Nadia Putri Lestari</strong></td><td>241040183</td><td>21 Okt 2026 · 09.18 WIB</td><td><span class="status-badge status-good">✓ Hadir</span></td><td><button class="btn btn-sm btn-outline-primary correction-trigger" type="button" data-name="Nadia Putri Lestari" data-nim="241040183" data-status="Hadir">Koreksi status</button></td></tr>
+                <tr><td><strong>Fajar Maulana</strong></td><td>231030421</td><td>21 Okt 2026 · 09.45 WIB</td><td><span class="status-badge status-wait">◷ Izin</span></td><td><button class="btn btn-sm btn-outline-primary correction-trigger" type="button" data-name="Fajar Maulana" data-nim="231030421" data-status="Izin">Koreksi status</button></td></tr>
+                <tr><td><strong>Rani Kusumawardani</strong></td><td>251020095</td><td>—</td><td><span class="status-badge status-bad">! Alpa</span></td><td><button class="btn btn-sm btn-outline-primary correction-trigger" type="button" data-name="Rani Kusumawardani" data-nim="251020095" data-status="Alpa">Koreksi status</button></td></tr>
+                <tr><td><strong>Ilham Setiawan</strong></td><td>221010714</td><td>—</td><td><span class="status-badge status-neutral">Tidak hadir</span></td><td><button class="btn btn-sm btn-outline-primary correction-trigger" type="button" data-name="Ilham Setiawan" data-nim="221010714" data-status="Tidak hadir">Koreksi status</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-body d-flex flex-wrap justify-content-between align-items-center gap-3"><span class="small text-secondary">Contoh baris pada halaman 1 · total 104 mahasiswa aktif</span><nav aria-label="Paginasi rekap kehadiran" class="d-flex flex-wrap gap-1"><a class="btn btn-sm btn-outline-secondary" href="#">Sebelumnya</a><a class="btn btn-sm btn-primary" href="#" aria-current="page">1</a><a class="btn btn-sm btn-outline-primary" href="#">2</a><a class="btn btn-sm btn-outline-primary" href="#">3</a><span class="align-self-center px-1" aria-hidden="true">…</span><a class="btn btn-sm btn-outline-primary" href="#">7</a><a class="btn btn-sm btn-outline-secondary" href="#">Berikutnya</a></nav></div>
+        </div>
+      </section>
+
+      <div class="alert alert-success mt-3 d-none" id="correction-success" role="status" aria-live="polite"></div>
+      <footer class="page-footer">Bagian Kemahasiswaan · Tahun Akademik 2026/2027 · kemahasiswaan@kampus.ac.id</footer>
+    </div>
+  </main>
+</div>
+
+<dialog class="activity-dialog" id="correction-dialog" aria-labelledby="correction-title">
+  <div class="dialog-head"><p class="small-label text-success mb-1">KOREKSI ADMIN</p><h2 class="h4 mb-0" id="correction-title">Koreksi status kehadiran</h2></div>
+  <div class="dialog-body">
+    <div class="card mb-3"><div class="card-body"><div><span class="small-label">Mahasiswa</span><div class="fw-semibold" id="correction-name"></div></div><div class="mt-2"><span class="small-label">NIM</span><div class="fw-semibold" id="correction-nim"></div></div></div></div>
+    <form id="correction-form" novalidate>
+      <div class="mb-3"><label class="form-label" for="correction-status">Status kehadiran</label><select class="form-select" id="correction-status" required><option>Hadir</option><option>Izin</option><option>Alpa</option></select><div class="invalid-feedback">Pilih status kehadiran.</div></div>
+      <div class="mb-2"><label class="form-label" for="correction-photo">Foto kegiatan wajib</label><input class="form-control" id="correction-photo" type="file" accept="image/jpeg,image/png" required><div class="form-text">Pilih foto JPG atau PNG sebagai bukti koreksi.</div><div class="invalid-feedback">Unggah foto kegiatan JPG atau PNG.</div></div>
+      <p class="small text-secondary mb-0">Waktu koreksi dicatat dari jam server saat ini.</p>
+    </form>
+  </div>
+  <div class="dialog-foot"><button type="button" class="btn btn-outline-secondary" id="cancel-correction">Batal</button><button type="button" class="btn btn-primary" id="save-correction">Simpan koreksi</button></div>
+</dialog>
+
+<script>
+document.querySelectorAll('.activity-form').forEach((form) => {
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const open = form.querySelector('.open-time');
+    const close = form.querySelector('.close-time');
+    const ordered = open.value !== '' && close.value !== '' && close.value > open.value;
+    close.classList.toggle('is-invalid', !ordered);
+    close.setAttribute('aria-invalid', String(!ordered));
+    if (!ordered) return;
+    form.reportValidity();
+  });
+});
+
+const correctionDialog = document.getElementById('correction-dialog');
+const correctionForm = document.getElementById('correction-form');
+const correctionStatus = document.getElementById('correction-status');
+const correctionPhoto = document.getElementById('correction-photo');
+const correctionSuccess = document.getElementById('correction-success');
+let correctionStudent = '';
+
+document.querySelectorAll('.correction-trigger').forEach((button) => {
+  button.addEventListener('click', () => {
+    correctionStudent = button.dataset.name;
+    document.getElementById('correction-name').textContent = button.dataset.name;
+    document.getElementById('correction-nim').textContent = button.dataset.nim;
+    correctionStatus.value = ['Hadir', 'Izin', 'Alpa'].includes(button.dataset.status) ? button.dataset.status : 'Alpa';
+    correctionPhoto.value = '';
+    correctionForm.classList.remove('was-validated');
+    correctionDialog.showModal();
+  });
+});
+
+document.getElementById('cancel-correction').addEventListener('click', () => correctionDialog.close());
+document.getElementById('save-correction').addEventListener('click', () => {
+  correctionForm.classList.add('was-validated');
+  const file = correctionPhoto.files[0];
+  if (!correctionStatus.value || !file || !['image/jpeg', 'image/png'].includes(file.type)) return;
+  correctionDialog.close();
+  correctionSuccess.textContent = `Koreksi kehadiran ${correctionStudent} tersimpan. Waktu dicatat oleh server.`;
+  correctionSuccess.classList.remove('d-none');
+  correctionSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+</script>
+</body>
+</html>

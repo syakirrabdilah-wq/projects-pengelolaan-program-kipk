@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AturanPrestasiRequest;
 use App\Models\AturanPrestasi;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AturanPrestasiController extends Controller
 {
@@ -23,7 +24,7 @@ class AturanPrestasiController extends Controller
 
     public function store(AturanPrestasiRequest $request)
     {
-        AturanPrestasi::create($request->validated());
+        DB::transaction(fn () => AturanPrestasi::create($request->validated()));
 
         return redirect()->route('admin.aturan-prestasi.index')->with('sukses', 'Aturan prestasi berhasil ditambahkan.');
     }
@@ -35,7 +36,7 @@ class AturanPrestasiController extends Controller
 
     public function update(AturanPrestasiRequest $request, AturanPrestasi $aturanPrestasi)
     {
-        $aturanPrestasi->update($request->validated());
+        DB::transaction(fn () => $aturanPrestasi->update($request->validated()));
 
         return redirect()->route('admin.aturan-prestasi.index')->with('sukses', 'Aturan prestasi berhasil diperbarui.');
     }
@@ -51,7 +52,7 @@ class AturanPrestasiController extends Controller
             ]);
         }
 
-        $aturanPrestasi->delete();
+        DB::transaction(fn () => $aturanPrestasi->delete());
 
         return redirect()->route('admin.aturan-prestasi.index')->with('sukses', 'Aturan prestasi mendatang berhasil dihapus.');
     }

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pembinaan — Sistem Manajemen Penerima KIP-K</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/theme.css" rel="stylesheet">
+  <style>
+    .attendance-summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .attendance-number { color: #14532d; font-size: 2rem; font-weight: 800; line-height: 1; }
+    .activity-card { height: 100%; }
+    .activity-card-open { border: 2px solid #15803d; box-shadow: 0 4px 18px rgba(21, 128, 61, .1); }
+    .activity-card .card-body { display: flex; flex-direction: column; }
+    .activity-meta { display: grid; gap: .5rem; margin: 1rem 0; }
+    .activity-meta div { display: flex; justify-content: space-between; gap: .75rem; }
+    .activity-meta dt { color: #4b5563; font-weight: 500; }
+    .activity-meta dd { margin: 0; text-align: right; font-weight: 600; }
+    .attendance-history-item + .attendance-history-item { border-top: 1px solid #e5f3e8; }
+    .countdown-panel { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .65rem .8rem; border-radius: .45rem; color: #14532d; background: #f0fdf4; }
+    .countdown-value { font-variant-numeric: tabular-nums; font-size: 1.15rem; font-weight: 800; letter-spacing: .04em; }
+    .photo-error { display: none; }
+    .photo-error.visible { display: block; }
+    @media (max-width: 767.98px) { .attendance-summary { align-items: flex-start; } .activity-meta div { align-items: flex-start; } }
+  </style>
+</head>
+<body>
+<div class="student-shell">
+  <header class="student-topbar">
+    <div class="container-fluid px-lg-4 student-top-inner">
+      <a class="brand-row student-brand p-0" href="mahasiswa-beranda.html"><span class="brand-name">Ruang KIP-K<span class="brand-caption">Bagian Kemahasiswaan</span></span></a>
+      <nav class="student-desktop-nav" aria-label="Navigasi mahasiswa"><a class="student-nav-link" href="mahasiswa-beranda.html">Beranda</a><a class="student-nav-link" href="mahasiswa-nilai.html">Nilai</a><a class="student-nav-link active" href="mahasiswa-pembinaan.html" aria-current="page">Pembinaan</a><a class="student-nav-link" href="mahasiswa-dokumentasi.html">Dokumentasi</a><a class="student-nav-link" href="mahasiswa-notifikasi.html">Notifikasi</a></nav>
+      <a class="profile-pill" href="mahasiswa-profil.html" aria-label="Profil Nadia Putri"><span class="avatar">NP</span><span class="d-none d-md-inline">Nadia Putri</span></a>
+    </div>
+  </header>
+
+  <main class="student-content">
+    <section class="page-hero" aria-labelledby="page-title"><p class="small-label text-success mb-1">KEGIATAN PEMBINAAN</p><h1 id="page-title">Pembinaan dan kehadiran</h1><p class="text-secondary mb-0">Absen tersedia pada waktu kegiatan. Waktu kehadiran dicatat otomatis oleh server.</p><hr class="title-rule"></section>
+
+    <!-- DATA DINAMIS: ringkasan dan kegiatan hanya milik mahasiswa yang sedang masuk. -->
+    <section class="card content-section" aria-label="Ringkasan kehadiran">
+      <div class="card-body attendance-summary"><div><span class="small-label">Kehadiran pembinaan</span><div class="d-flex align-items-baseline gap-2 mt-1"><strong class="attendance-number">92%</strong><span class="small text-secondary">11 dari 12 kegiatan</span></div><p class="small text-secondary mb-0 mt-2">11 hadir · 1 izin · 0 alpa</p></div><span class="status-badge status-good">✓ Kehadiran baik</span></div>
+    </section>
+
+    <section class="content-section" aria-labelledby="activities-title">
+      <div class="section-heading"><div><h2 id="activities-title">Kegiatan</h2><p class="small text-secondary mb-0">Contoh keadaan absen pada jadwal kegiatan.</p></div><span class="status-badge status-neutral">4 kegiatan</span></div>
+      <div class="row g-3">
+        <!-- Keadaan belum dibuka. -->
+        <div class="col-12 col-md-6"><article class="card activity-card"><div class="card-body">
+          <div class="d-flex flex-wrap justify-content-between align-items-start gap-2"><span class="status-badge status-neutral">○ Belum dibuka</span><span class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18"/></svg></span></div>
+          <h3 class="h5 mt-3 mb-1">Diskusi Strategi Belajar</h3>
+          <dl class="activity-meta"><div><dt>Tanggal</dt><dd>30 Okt 2026</dd></div><div><dt>Waktu</dt><dd>13.00–14.30 WIB</dd></div></dl>
+          <button class="btn btn-outline-secondary w-100 mt-auto" type="button" disabled aria-describedby="not-open-reason">Absen</button><p class="form-text text-secondary mt-2 mb-0" id="not-open-reason">Absen dibuka pukul 13.00.</p>
+        </div></article></div>
+
+        <!-- Keadaan sedang dibuka; foto merupakan bukti wajib absensi. -->
+        <div class="col-12 col-md-6"><article class="card activity-card activity-card-open" id="open-activity" data-countdown="1439"><div class="card-body">
+          <div class="d-flex flex-wrap justify-content-between align-items-start gap-2"><span class="status-badge status-good" id="open-status">● Sedang dibuka</span><span class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18"/></svg></span></div>
+          <h3 class="h5 mt-3 mb-1">Klinik Belajar Tengah Semester</h3>
+          <dl class="activity-meta"><div><dt>Tanggal</dt><dd>25 Okt 2026</dd></div><div><dt>Waktu absen</dt><dd>13.00–14.00 WIB</dd></div></dl>
+          <div class="countdown-panel mb-3" role="timer" aria-live="off"><span class="small fw-semibold">Waktu tersisa</span><span class="countdown-value" id="countdown">23:59</span></div>
+          <div id="active-attendance-controls" class="mt-auto"><label class="form-label" for="activity-photo">Foto kegiatan wajib</label><input class="form-control" id="activity-photo" type="file" accept="image/jpeg,image/png" required aria-describedby="photo-help photo-error"><div class="form-text" id="photo-help">JPG atau PNG, maksimal 5 MB. Waktu absen diambil server saat diterima.</div><div class="invalid-feedback photo-error" id="photo-error">Pilih foto kegiatan JPG/PNG maksimal 5 MB untuk absen.</div><button class="btn btn-primary w-100 mt-3" id="check-in" type="button">Absen</button></div>
+          <div class="notice mt-3 d-none" id="check-in-success" role="status" aria-live="polite"><span class="notice-icon">✓</span><span>Hadir pukul 13.07</span></div>
+        </div></article></div>
+
+        <!-- Keadaan sudah absen. -->
+        <div class="col-12 col-md-6"><article class="card activity-card"><div class="card-body">
+          <span class="status-badge status-good">✓ Sudah absen</span><h3 class="h5 mt-3 mb-1">Pendampingan Akademik</h3>
+          <dl class="activity-meta"><div><dt>Tanggal</dt><dd>24 Okt 2026</dd></div><div><dt>Waktu kegiatan</dt><dd>09.00–10.30 WIB</dd></div></dl>
+          <button class="btn btn-outline-secondary w-100 mt-auto" type="button" disabled>Hadir pukul 13.07</button>
+          <p class="small text-secondary mt-2 mb-0">✓ Foto diterima · waktu dicatat server.</p>
+        </div></article></div>
+
+        <!-- Keadaan kegiatan ditutup tanpa catatan absen. -->
+        <div class="col-12 col-md-6"><article class="card activity-card"><div class="card-body">
+          <span class="status-badge status-bad">! Ditutup</span><h3 class="h5 mt-3 mb-1">Manajemen Waktu Kuliah</h3>
+          <dl class="activity-meta"><div><dt>Tanggal</dt><dd>21 Okt 2026</dd></div><div><dt>Waktu kegiatan</dt><dd>09.00–10.30 WIB</dd></div></dl>
+          <button class="btn btn-outline-secondary w-100 mt-auto" type="button" disabled>Tidak hadir</button>
+          <p class="small text-secondary mt-2 mb-0">Jendela absen telah ditutup.</p>
+        </div></article></div>
+      </div>
+    </section>
+
+    <section class="content-section" aria-labelledby="history-title">
+      <div class="section-heading"><div><h2 id="history-title">Riwayat kehadiran</h2><p class="small text-secondary mb-0">Kegiatan yang sudah selesai.</p></div></div>
+      <article class="card"><div class="card-body p-0">
+        <!-- DATA DINAMIS: riwayat absensi pribadi mahasiswa. -->
+        <div class="attendance-history-item p-3 d-flex flex-wrap justify-content-between align-items-center gap-2"><div><strong>Manajemen Waktu Kuliah</strong><div class="small text-secondary">21 Okt 2026 · 09.00–10.30 WIB</div></div><span class="status-badge status-good">✓ Hadir pukul 09.18</span></div>
+        <div class="attendance-history-item p-3 d-flex flex-wrap justify-content-between align-items-center gap-2"><div><strong>Bimbingan Akademik</strong><div class="small text-secondary">14 Okt 2026 · 13.00–14.00 WIB</div></div><span class="status-badge status-wait">◷ Izin</span></div>
+        <div class="attendance-history-item p-3 d-flex flex-wrap justify-content-between align-items-center gap-2"><div><strong>Lokakarya Belajar Mandiri</strong><div class="small text-secondary">7 Okt 2026 · 10.00–11.30 WIB</div></div><span class="status-badge status-bad">! Alpa</span></div>
+      </div></article>
+    </section>
+
+    <footer class="page-footer">Bagian Kemahasiswaan · Tahun Akademik 2026/2027 · kemahasiswaan@kampus.ac.id</footer>
+  </main>
+  <nav class="student-bottom-nav mobile-bottom-nav" aria-label="Navigasi bawah">
+    <a href="mahasiswa-beranda.html"><svg class="icon" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10H3zM9 20v-6h6v6"/></svg>Beranda</a>
+    <a href="mahasiswa-nilai.html"><svg class="icon" viewBox="0 0 24 24"><path d="M4 4h6a4 4 0 0 1 4 4v12a4 4 0 0 0-4-4H4zM20 4h-2a4 4 0 0 0-4 4v12a4 4 0 0 1 4-4h2z"/></svg>Nilai</a>
+    <a class="active" href="mahasiswa-pembinaan.html" aria-current="page"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18"/></svg>Pembinaan</a>
+    <a href="mahasiswa-dokumentasi.html"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><circle cx="8" cy="10" r="1.5"/><path d="m4 18 6-5 3 3 3-2 4 4"/></svg>Dokumentasi</a>
+    <a href="mahasiswa-notifikasi.html"><svg class="icon" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9m-8 12h4"/></svg>Notifikasi</a>
+  </nav>
+</div>
+<script>
+let secondsLeft = Number(document.getElementById('open-activity').dataset.countdown);
+const countdownText = document.getElementById('countdown');
+const checkInButton = document.getElementById('check-in');
+const photoInput = document.getElementById('activity-photo');
+const photoError = document.getElementById('photo-error');
+const checkInControls = document.getElementById('active-attendance-controls');
+
+function showCountdown() {
+  const minutes = Math.floor(secondsLeft / 60).toString().padStart(2, '0');
+  const seconds = (secondsLeft % 60).toString().padStart(2, '0');
+  countdownText.textContent = minutes + ':' + seconds;
+  if (secondsLeft > 0) secondsLeft -= 1;
+}
+showCountdown();
+window.setInterval(showCountdown, 1000);
+
+checkInButton.addEventListener('click', () => {
+  const photo = photoInput.files[0];
+  if (!photo || !['image/jpeg', 'image/png'].includes(photo.type) || photo.size > 5 * 1024 * 1024) {
+    photoInput.classList.add('is-invalid');
+    photoInput.setAttribute('aria-invalid', 'true');
+    photoError.classList.add('visible');
+    photoInput.focus();
+    return;
+  }
+  photoInput.classList.remove('is-invalid');
+  photoInput.removeAttribute('aria-invalid');
+  photoError.classList.remove('visible');
+  checkInControls.classList.add('d-none');
+  document.getElementById('open-status').className = 'status-badge status-good';
+  document.getElementById('open-status').textContent = '✓ Sudah absen';
+  document.getElementById('check-in-success').classList.remove('d-none');
+  checkInButton.disabled = true;
+  checkInButton.textContent = 'Hadir pukul 13.07';
+});
+</script>
+</body>
+</html>

@@ -19,5 +19,15 @@ class ReferensiKipkSeeder extends Seeder
             ['kunci' => 'peringatan_batas_pencabutan'],
             ['nilai' => '3'],
         );
+
+        Pengaturan::updateOrCreate(
+            ['kunci' => 'dokumentasi_tenggat_hari'],
+            ['nilai' => '7'],
+        );
+
+        Pengaturan::updateOrCreate(
+            ['kunci' => 'dokumentasi_tenggat_jam'],
+            ['nilai' => '23:59'],
+        );
     }
 }

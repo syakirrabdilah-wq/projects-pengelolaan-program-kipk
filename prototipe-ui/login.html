@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Masuk — Sistem Manajemen Penerima KIP-K</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/theme.css" rel="stylesheet">
+  <style>
+    .login-preview .auth-panel { align-content: start; padding-block: 1.5rem; }
+    .login-preview .login-content { width: min(100%, 560px); margin-inline: auto; }
+    .login-state-list { display: grid; gap: 1rem; }
+    .login-state-card { padding: 1.25rem; }
+    .login-state-card h2 { font-family: var(--bs-font-sans-serif); font-size: 1rem; font-weight: 700; }
+    .login-state-card .state-number { display: inline-grid; width: 28px; height: 28px; place-items: center; margin-right: .45rem; border-radius: 50%; color: #14532d; background: #f0fdf4; }
+    .login-state-error { border-color: #fca5a5; }
+    .login-state-locked { border-color: #fcd34d; }
+    .password-field { position: relative; }
+    .password-field .form-control { padding-right: 6.3rem; }
+    .password-toggle { position: absolute; top: 50%; right: .45rem; min-height: 36px; padding: .25rem .5rem; transform: translateY(-50%); border: 0; border-radius: .35rem; color: #166534; background: #fff; font-size: .82rem; font-weight: 700; }
+    .password-toggle:focus-visible { outline: 3px solid rgba(21, 128, 61, .3); }
+    .auth-visual { position: sticky; top: 0; }
+    @media (max-width: 767.98px) {
+      .login-preview .auth-visual { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 78px; grid-template-rows: auto auto auto; grid-template-areas: "brand brand" "title art" "welcome art"; align-content: center; justify-items: stretch; min-height: 0; gap: .1rem .6rem; padding: .85rem 1rem; }
+      .login-preview .auth-visual .brand-row { grid-area: brand; padding: 0 0 .45rem; }
+      .login-preview .auth-visual h1 { grid-area: title; align-self: end; margin: 0; font-size: 1.12rem; text-align: left; }
+      .login-preview .auth-visual p { grid-area: welcome; align-self: start; margin: 0; font-size: .8rem; line-height: 1.35; text-align: left; }
+      .login-preview .auth-illustration { grid-area: art; width: 78px; margin: 0; align-self: center; }
+      .login-preview .auth-panel { min-height: 0; padding: 1rem .75rem 2rem; }
+      .login-state-card { padding: 1rem; }
+    }
+  </style>
+</head>
+<body class="login-preview">
+  <main class="auth-page">
+    <section class="auth-visual" aria-labelledby="system-title">
+      <a class="brand-row" href="index.html" aria-label="Sistem Manajemen Penerima KIP-K">
+
+        <span class="brand-name">Sistem Manajemen Penerima KIP-K<span class="brand-caption">Bagian Kemahasiswaan</span></span>
+      </a>
+      <svg class="auth-illustration" viewBox="0 0 440 290" role="img" aria-label="Ilustrasi mahasiswa belajar bersama buku">
+        <circle cx="220" cy="144" r="124" fill="#166534"/><circle cx="322" cy="67" r="20" fill="#c9a227" opacity=".85"/><path d="M81 239h276" stroke="#bbf7d0" stroke-width="4" stroke-linecap="round"/>
+        <path d="M134 176c21-16 45-16 66 0v64c-21-16-45-16-66 0v-64Zm66 0c21-16 45-16 66 0v64c-21-16-45-16-66 0v-64Z" fill="#fff" stroke="#14532d" stroke-width="4" stroke-linejoin="round"/><path d="M149 190h35m-35 13h31m31-13h35m-35 13h31" stroke="#86c99a" stroke-width="3" stroke-linecap="round"/>
+        <path d="M105 233c0-27 13-42 35-42s35 15 35 42v8h-70v-8Z" fill="#86c99a"/><circle cx="140" cy="157" r="23" fill="#f2c7a5"/><path d="M116 157c2-21 14-33 32-30 12 2 20 12 21 27-12-1-23-6-31-14-5 9-12 14-22 17Z" fill="#14532d"/><path d="m101 143 39-20 39 20-39 20-39-20Z" fill="#c9a227"/><path d="M140 162v10m-21-29c12 4 28 4 42 0" stroke="#14532d" stroke-width="3" stroke-linecap="round"/>
+        <path d="M264 233c0-27 13-42 35-42s35 15 35 42v8h-70v-8Z" fill="#bbf7d0"/><circle cx="299" cy="157" r="23" fill="#e7b991"/><path d="M275 158c1-22 13-34 32-31 13 2 20 14 20 28-11-1-24-6-31-14-4 9-12 14-21 17Z" fill="#1f2937"/><path d="m262 143 37-20 39 20-39 20-37-20Z" fill="#f0fdf4" stroke="#14532d" stroke-width="3"/>
+        <path d="M300 239v18m-160-18v18m160-1h30m-190 0h30" stroke="#14532d" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+      <h1 id="system-title" class="text-center">Selamat datang di ruang KIP-K</h1>
+      <p class="mb-0 text-center">Sistem Manajemen Penerima KIP-K membantu Anda memantau perkembangan akademik dan pembinaan.</p>
+    </section>
+
+    <section class="auth-panel" aria-labelledby="login-title">
+      <div class="login-content">
+        <header class="mb-4">
+          <p class="small-label text-success mb-2">AKSES PENGGUNA</p>
+          <h2 class="h3 mb-2" id="login-title">Masuk ke akun Anda</h2>
+          <p class="text-secondary mb-0">Halaman masuk yang sama digunakan oleh admin dan mahasiswa.</p>
+        </header>
+
+        <!-- DATA DINAMIS: validasi username dan kata sandi, serta status pembatasan login. -->
+        <div class="login-state-list">
+          <article class="card login-state-card" aria-labelledby="normal-title">
+            <h2 id="normal-title"><span class="state-number">1</span>Keadaan normal</h2>
+            <form action="#" method="post">
+              <div class="mb-3">
+                <label class="form-label" for="username-normal">Nama pengguna</label>
+                <input class="form-control" id="username-normal" name="username" autocomplete="username" placeholder="Masukkan username" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="password-normal">Kata sandi</label>
+                <div class="password-field">
+                  <input class="form-control" id="password-normal" name="password" type="password" autocomplete="current-password" placeholder="Masukkan kata sandi" required>
+                  <button class="password-toggle" type="button" aria-controls="password-normal" aria-label="Tampilkan kata sandi" aria-pressed="false">Lihat</button>
+                </div>
+              </div>
+              <button class="btn btn-primary w-100" type="submit">Masuk</button>
+            </form>
+          </article>
+
+          <article class="card login-state-card login-state-error" aria-labelledby="error-title">
+            <h2 id="error-title"><span class="state-number">2</span>Keadaan galat</h2>
+            <div class="alert alert-danger py-2" role="alert">Nama pengguna atau kata sandi salah.</div>
+            <form action="#" method="post">
+              <div class="mb-3">
+                <label class="form-label" for="username-error">Nama pengguna</label>
+                <input class="form-control is-invalid" id="username-error" autocomplete="username" value="nadia.putri" aria-invalid="true" aria-describedby="login-error" required>
+                <div class="invalid-feedback" id="login-error">Periksa kembali username dan kata sandi.</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="password-error">Kata sandi</label>
+                <div class="password-field"><input class="form-control" id="password-error" type="password" autocomplete="current-password" placeholder="Masukkan kata sandi" required><button class="password-toggle" type="button" aria-controls="password-error" aria-label="Tampilkan kata sandi" aria-pressed="false">Lihat</button></div>
+              </div>
+              <button class="btn btn-primary w-100" type="submit">Masuk</button>
+            </form>
+          </article>
+
+          <article class="card login-state-card login-state-locked" aria-labelledby="locked-title">
+            <h2 id="locked-title"><span class="state-number">3</span>Terkunci sementara</h2>
+            <div class="alert alert-warning py-2" role="status">Terlalu banyak percobaan. Coba lagi dalam 1 menit.</div>
+            <form action="#" method="post">
+              <div class="mb-3">
+                <label class="form-label" for="username-locked">Nama pengguna</label>
+                <input class="form-control" id="username-locked" autocomplete="username" placeholder="Masukkan username" disabled>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="password-locked">Kata sandi</label>
+                <div class="password-field"><input class="form-control" id="password-locked" type="password" autocomplete="current-password" placeholder="Masukkan kata sandi" disabled><button class="password-toggle" type="button" aria-controls="password-locked" aria-label="Tampilkan kata sandi" aria-pressed="false" disabled>Lihat</button></div>
+              </div>
+              <button class="btn btn-primary w-100" type="submit" disabled aria-describedby="locked-reason">Masuk</button>
+              <p class="form-text mb-0 mt-2" id="locked-reason">Tombol masuk aktif kembali setelah waktu tunggu selesai.</p>
+            </form>
+          </article>
+        </div>
+
+        <p class="small text-secondary mt-3 mb-0">Lupa kata sandi? Hubungi admin kemahasiswaan.</p>
+        <footer class="page-footer text-center">Bagian Kemahasiswaan · Tahun Akademik 2026/2027<br>Kontak: kemahasiswaan@kampus.ac.id</footer>
+      </div>
+    </section>
+  </main>
+  <script>
+    document.querySelectorAll('.password-toggle').forEach((button) => {
+      button.addEventListener('click', () => {
+        const input = document.getElementById(button.getAttribute('aria-controls'));
+        const show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        button.textContent = show ? 'Sembunyi' : 'Lihat';
+        button.setAttribute('aria-label', show ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi');
+        button.setAttribute('aria-pressed', String(show));
+      });
+    });
+  </script>
+</body>
+</html>

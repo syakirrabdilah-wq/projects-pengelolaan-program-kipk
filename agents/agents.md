@@ -49,7 +49,7 @@ php artisan schedule:work     # uji penjadwal secara lokal
 - Jangan memasukkan rahasia, data nyata, atau `.env` ke repositori.
 - Jangan mengarang aturan KIP-K; hanya pakai aturan di `prd.md`.
 - Jangan mencabut status KIP-K secara otomatis; admin yang mengubah status setelah konfirmasi (sudah dikonfirmasi pemilik proyek).
-- Jangan menambah pengamanan absensi di luar jendela waktu.
+- Absensi mensyaratkan jendela waktu dan foto; jangan menambah kode sesi, QR, atau geolokasi.
 
 ## 6. Peran agent (bila bekerja paralel)
 

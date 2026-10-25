@@ -9,5 +9,5 @@
     <input id="berlaku_mulai" name="berlaku_mulai" type="date" value="{{ old('berlaku_mulai', isset($aturanPrestasi) ? $aturanPrestasi->berlaku_mulai->format('Y-m-d') : '') }}" required class="form-control @error('berlaku_mulai') is-invalid @enderror">
     @error('berlaku_mulai')<div class="invalid-feedback">{{ $message }}</div>@enderror
 </div>
-<button class="btn btn-primary" onclick="return confirm('Simpan perubahan aturan prestasi?')">Simpan aturan</button>
+<button class="btn btn-primary">Simpan aturan</button>
 <a class="btn btn-outline-secondary" href="{{ route('admin.aturan-prestasi.index') }}">Batal</a>

@@ -1,9 +1,9 @@
 -- Skema database: Website Manajemen Penerima KIP-K
 -- Target: MySQL 8.0+ / MariaDB 10.5+ (InnoDB, utf8mb4)
 
-CREATE DATABASE IF NOT EXISTS kipk_db
+CREATE DATABASE IF NOT EXISTS db_kipk
   CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE kipk_db;
+USE db_kipk;
 
 -- 1. Akun pengguna (admin kemahasiswaan dan mahasiswa)
 CREATE TABLE users (
@@ -26,6 +26,8 @@ CREATE TABLE mahasiswa (
   status_kipk ENUM('aktif','cuti','lulus','dicabut','mengundurkan_diri')
               NOT NULL DEFAULT 'aktif',
   created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY idx_mhs_status (status_kipk),
+  KEY idx_mhs_prodi_angkatan (prodi, angkatan),
   CONSTRAINT fk_mhs_user FOREIGN KEY (user_id) REFERENCES users(id)
     ON DELETE CASCADE
 ) ENGINE=InnoDB;
@@ -66,6 +68,7 @@ CREATE TABLE peringatan (
   tingkat       TINYINT UNSIGNED NOT NULL DEFAULT 1,
   tanggal       DATE NOT NULL,
   UNIQUE KEY uq_peringatan_semester (mahasiswa_id, semester_id),
+  KEY idx_peringatan_tingkat_tanggal (tingkat, tanggal),
   CONSTRAINT fk_per_mhs FOREIGN KEY (mahasiswa_id) REFERENCES mahasiswa(id)
     ON DELETE CASCADE,
   CONSTRAINT fk_per_aturan FOREIGN KEY (aturan_id) REFERENCES aturan_prestasi(id),
@@ -81,6 +84,7 @@ CREATE TABLE kegiatan_pembinaan (
   absen_buka  DATETIME NOT NULL,
   absen_tutup DATETIME NOT NULL,
   dibuat_oleh INT UNSIGNED NOT NULL,
+  KEY idx_kegiatan_tutup (absen_tutup),
   CONSTRAINT chk_jam_absen CHECK (absen_tutup > absen_buka),
   CONSTRAINT fk_keg_admin FOREIGN KEY (dibuat_oleh) REFERENCES users(id)
 ) ENGINE=InnoDB;
@@ -92,7 +96,9 @@ CREATE TABLE absensi (
   mahasiswa_id  INT UNSIGNED NOT NULL,
   waktu         DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   status        ENUM('hadir','izin','alpa') NOT NULL DEFAULT 'hadir',
+  file_foto     VARCHAR(255) NULL,
   UNIQUE KEY uq_absen (kegiatan_id, mahasiswa_id),
+  KEY idx_absensi_mhs_status_kegiatan (mahasiswa_id, status, kegiatan_id),
   CONSTRAINT fk_abs_keg FOREIGN KEY (kegiatan_id) REFERENCES kegiatan_pembinaan(id)
     ON DELETE CASCADE,
   CONSTRAINT fk_abs_mhs FOREIGN KEY (mahasiswa_id) REFERENCES mahasiswa(id)
@@ -112,6 +118,7 @@ CREATE TABLE dokumentasi_mingguan (
   diverifikasi_oleh  INT UNSIGNED NULL,
   created_at         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   UNIQUE KEY uq_dok_minggu (mahasiswa_id, tahun, minggu_ke),
+  KEY idx_dok_status_created (status_verifikasi, created_at),
   CONSTRAINT fk_dok_mhs FOREIGN KEY (mahasiswa_id) REFERENCES mahasiswa(id)
     ON DELETE CASCADE,
   CONSTRAINT fk_dok_admin FOREIGN KEY (diverifikasi_oleh) REFERENCES users(id)
@@ -125,6 +132,7 @@ CREATE TABLE notifikasi (
   sudah_dibaca TINYINT(1) NOT NULL DEFAULT 0,
   created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY idx_notif_user (user_id, sudah_dibaca),
+  KEY idx_notif_user_created (user_id, created_at),
   CONSTRAINT fk_notif_user FOREIGN KEY (user_id) REFERENCES users(id)
     ON DELETE CASCADE
 ) ENGINE=InnoDB;
@@ -136,6 +144,23 @@ CREATE TABLE pengaturan (
   diubah_oleh INT UNSIGNED NULL,
   updated_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT fk_set_admin FOREIGN KEY (diubah_oleh) REFERENCES users(id)
+) ENGINE=InnoDB;
+
+-- 11. Audit perubahan nilai, status KIP-K, aturan prestasi, dan pengaturan
+CREATE TABLE audit_log (
+  id          BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  user_id     INT UNSIGNED NULL,
+  jenis_data  VARCHAR(64) NOT NULL,
+  data_id     VARCHAR(64) NOT NULL,
+  aksi        VARCHAR(20) NOT NULL,
+  perubahan   JSON NOT NULL,
+  created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY idx_audit_data (jenis_data, data_id),
+  KEY idx_audit_user_created (user_id, created_at),
+  KEY idx_audit_created (created_at),
+  KEY idx_audit_type_action_date (jenis_data, aksi, created_at),
+  CONSTRAINT fk_audit_user FOREIGN KEY (user_id) REFERENCES users(id)
+    ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
 -- Data awal: batas IPK minimal 3,00

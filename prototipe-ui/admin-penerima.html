@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data penerima — Sistem Manajemen Penerima KIP-K</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/theme.css" rel="stylesheet">
+  <style>
+    .page-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .6rem; }
+    .receiver-filters { display: grid; grid-template-columns: minmax(230px, 1.6fr) repeat(3, minmax(145px, 1fr)) auto; align-items: end; gap: .75rem; padding: 1rem; border: 1px solid #d8eadc; border-radius: .5rem; background: #fff; }
+    .receiver-filters .form-label { margin-bottom: .35rem; }
+    .recipient-forms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .dialog-import { width: min(760px, calc(100vw - 2rem)); max-width: none; max-height: min(90vh, 900px); padding: 0; overflow: auto; border: 0; border-radius: .75rem; box-shadow: 0 16px 60px rgba(20, 83, 45, .24); }
+    .dialog-import::backdrop { background: rgba(17, 24, 39, .55); }
+    .dialog-head, .dialog-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; background: #fff; }
+    .dialog-head { border-bottom: 1px solid #e5f3e8; }
+    .dialog-foot { justify-content: flex-end; border-top: 1px solid #e5f3e8; }
+    .dialog-body { padding: 1.25rem; background: #f6faf7; }
+    .empty-state-compact { display: flex; align-items: center; gap: 1rem; text-align: left; }
+    .empty-state-compact svg { flex: 0 0 60px; width: 60px; height: 60px; margin: 0; }
+    @media (max-width: 1100px) {
+      .receiver-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .receiver-filters .search-field { grid-column: 1 / -1; }
+    }
+    @media (max-width: 767.98px) {
+      .page-actions { justify-content: stretch; }
+      .page-actions .btn { flex: 1 1 100%; }
+      .receiver-filters, .recipient-forms { grid-template-columns: 1fr; }
+      .receiver-filters .search-field { grid-column: auto; }
+      .receiver-filters .btn { width: 100%; }
+      .dialog-head, .dialog-body, .dialog-foot { padding: 1rem; }
+      .empty-state-compact { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <a class="brand-row" href="index.html"><span class="brand-name">Sistem Manajemen Penerima KIP-K<span class="brand-caption">Panel Kemahasiswaan</span></span></a>
+    <div class="sidebar-label">Menu utama</div>
+    <nav class="sidebar-nav" aria-label="Navigasi admin">
+      <a class="sidebar-link" href="admin-dashboard.html">Dashboard</a>
+      <a class="sidebar-link active" href="admin-penerima.html" aria-current="page">Data penerima</a>
+      <a class="sidebar-link" href="admin-nilai.html">Nilai akademik</a>
+      <a class="sidebar-link" href="admin-aturan.html">Aturan prestasi</a>
+      <a class="sidebar-link" href="admin-peringatan.html">Peringatan</a>
+      <a class="sidebar-link" href="admin-kegiatan.html">Kegiatan pembinaan</a>
+      <a class="sidebar-link" href="admin-verifikasi.html">Verifikasi dokumentasi</a>
+      <a class="sidebar-link" href="admin-laporan.html">Laporan</a>
+      <a class="sidebar-link" href="admin-akun.html">Akun</a>
+      <a class="sidebar-link" href="admin-pengaturan.html">Pengaturan</a>
+    </nav>
+    <div class="sidebar-bottom">Tahun Akademik 2026/2027<br>Bagian Kemahasiswaan</div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar"><a href="admin-verifikasi.html" class="text-decoration-none text-success me-2">Notifikasi <span class="badge text-bg-success">4</span></a><a class="user-menu" href="admin-akun.html"><span class="avatar">SA</span><span><strong>Staf Admin</strong><small class="d-block text-secondary">Administrator</small></span></a></header>
+    <div class="admin-content">
+      <section class="page-hero" aria-labelledby="page-title">
+        <p class="small-label text-success mb-1">DATA PENERIMA</p>
+        <h1 id="page-title">Kelola penerima KIP-K</h1>
+        <p class="text-secondary mb-0">Cari, saring, dan perbarui data mahasiswa penerima.</p>
+        <hr class="title-rule">
+      </section>
+
+      <div class="page-actions content-section">
+        <a href="#form-tambah" class="btn btn-primary">+ Tambah penerima</a>
+        <button class="btn btn-outline-primary" type="button" id="open-import">Impor Excel</button>
+      </div>
+
+      <!-- DATA DINAMIS: pencarian nama/NIM dan filter prodi, angkatan, serta status. -->
+      <form class="receiver-filters content-section" id="filters-empty" action="#" method="get">
+        <div class="search-field"><label class="form-label" for="cari">Cari nama atau NIM</label><input class="form-control" id="cari" name="q" type="search" placeholder="Contoh: Nadia Putri atau 241040183"></div>
+        <div><label class="form-label" for="prodi">Prodi</label><select class="form-select" id="prodi" name="prodi"><option value="">Semua prodi</option><option>Teknik Informatika</option><option>Manajemen</option><option>Pendidikan Matematika</option><option>Akuntansi</option><option>Keperawatan</option><option>Ilmu Komunikasi</option></select></div>
+        <div><label class="form-label" for="angkatan">Angkatan</label><select class="form-select" id="angkatan" name="angkatan"><option value="">Semua angkatan</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option></select></div>
+        <div><label class="form-label" for="status">Status KIP-K</label><select class="form-select" id="status" name="status"><option value="">Semua status</option><option>Aktif</option><option>Cuti</option><option>Lulus</option><option>Dicabut</option><option>Mengundurkan diri</option></select></div>
+        <button class="btn btn-primary" type="submit">Terapkan</button>
+      </form>
+
+      <section class="content-section" aria-labelledby="list-title">
+        <div class="section-heading"><div><h2 id="list-title">Daftar penerima</h2><p class="small text-secondary mb-0">120 data · halaman 1 dari 8</p></div><span class="status-badge status-neutral">Menampilkan 1–15</span></div>
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table table-striped mb-0">
+              <thead><tr><th scope="col">NIM</th><th scope="col">Nama</th><th scope="col">Prodi</th><th scope="col">Angkatan</th><th scope="col">IPK terakhir</th><th scope="col">Status KIP-K</th><th scope="col">Aksi</th></tr></thead>
+              <tbody>
+                <!-- DATA DINAMIS: data mahasiswa fiktif untuk contoh tampilan. -->
+                <tr><td>241040183</td><td><strong>Nadia Putri Lestari</strong></td><td>Teknik Informatika</td><td>2024</td><td>3,42</td><td><span class="status-badge status-good">✓ Aktif</span></td><td><div class="table-actions"><a class="btn btn-sm btn-outline-secondary" href="#rincian">Lihat</a><a class="btn btn-sm btn-outline-primary" href="#form-ubah">Ubah</a></div></td></tr>
+                <tr><td>231030421</td><td><strong>Fajar Maulana</strong></td><td>Pendidikan Matematika</td><td>2023</td><td>3,08</td><td><span class="status-badge status-wait">◷ Cuti</span></td><td><div class="table-actions"><a class="btn btn-sm btn-outline-secondary" href="#rincian">Lihat</a><a class="btn btn-sm btn-outline-primary" href="#form-ubah">Ubah</a></div></td></tr>
+                <tr><td>251020095</td><td><strong>Rani Kusumawardani</strong></td><td>Manajemen</td><td>2025</td><td>3,71</td><td><span class="status-badge status-good">✓ Aktif</span></td><td><div class="table-actions"><a class="btn btn-sm btn-outline-secondary" href="#rincian">Lihat</a><a class="btn btn-sm btn-outline-primary" href="#form-ubah">Ubah</a></div></td></tr>
+                <tr><td>221010714</td><td><strong>Ilham Setiawan</strong></td><td>Akuntansi</td><td>2022</td><td>3,56</td><td><span class="status-badge status-neutral">✓ Lulus</span></td><td><div class="table-actions"><a class="btn btn-sm btn-outline-secondary" href="#rincian">Lihat</a><a class="btn btn-sm btn-outline-primary" href="#form-ubah">Ubah</a></div></td></tr>
+                <tr><td>231050628</td><td><strong>Rizky Ananda</strong></td><td>Keperawatan</td><td>2023</td><td>2,61</td><td><span class="status-badge status-bad">! Dicabut</span></td><td><div class="table-actions"><a class="btn btn-sm btn-outline-secondary" href="#rincian">Lihat</a><a class="btn btn-sm btn-outline-primary" href="#form-ubah">Ubah</a></div></td></tr>
+                <tr><td>241060142</td><td><strong>Putri Maharani</strong></td><td>Ilmu Komunikasi</td><td>2024</td><td>—</td><td><span class="status-badge status-neutral">↗ Mengundurkan diri</span></td><td><div class="table-actions"><a class="btn btn-sm btn-outline-secondary" href="#rincian">Lihat</a><a class="btn btn-sm btn-outline-primary" href="#form-ubah">Ubah</a></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-body d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <span class="small text-secondary">Menampilkan 1–15 dari 120 penerima</span>
+            <nav aria-label="Paginasi daftar penerima" class="d-flex flex-wrap gap-1">
+              <a class="btn btn-sm btn-outline-secondary" href="#">Sebelumnya</a><a class="btn btn-sm btn-primary" aria-current="page" href="#">1</a><a class="btn btn-sm btn-outline-primary" href="#">2</a><a class="btn btn-sm btn-outline-primary" href="#">3</a><span class="align-self-center px-1" aria-hidden="true">…</span><a class="btn btn-sm btn-outline-primary" href="#">8</a><a class="btn btn-sm btn-outline-secondary" href="#">Berikutnya</a>
+            </nav>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section" id="rincian" aria-labelledby="detail-title">
+        <div class="section-heading"><div><h2 id="detail-title">Rincian penerima terpilih</h2><p class="small text-secondary mb-0">Contoh tampilan saat admin memilih Lihat.</p></div></div>
+        <article class="card"><div class="card-body row g-3">
+          <div class="col-12 col-md-4"><span class="small-label">Nama</span><div class="fw-semibold">Nadia Putri Lestari</div></div>
+          <div class="col-6 col-md-2"><span class="small-label">NIM</span><div class="fw-semibold">241040183</div></div>
+          <div class="col-6 col-md-3"><span class="small-label">Prodi · Angkatan</span><div class="fw-semibold">Teknik Informatika · 2024</div></div>
+          <div class="col-6 col-md-1"><span class="small-label">IPK</span><div class="fw-semibold">3,42</div></div>
+          <div class="col-6 col-md-2"><span class="small-label">Status KIP-K</span><div><span class="status-badge status-good">✓ Aktif</span></div></div>
+        </div></article>
+      </section>
+
+      <!-- KEADAAN KOSONG: tampilkan ketika pencarian atau filter tidak menemukan data. -->
+      <section class="content-section" aria-labelledby="empty-title">
+        <div class="section-heading"><div><h2 id="empty-title">Contoh keadaan kosong</h2><p class="small text-secondary mb-0">Tampilan jika tidak ada penerima yang cocok dengan pencarian.</p></div></div>
+        <div class="card"><div class="card-body empty-state empty-state-compact">
+          <svg viewBox="0 0 96 72" role="img" aria-label="Ilustrasi daftar kosong"><rect x="19" y="8" width="48" height="56" rx="5" fill="#f0fdf4" stroke="#15803d" stroke-width="2"/><path d="M29 22h27M29 32h22M29 42h16" stroke="#86c99a" stroke-width="3" stroke-linecap="round"/><circle cx="69" cy="49" r="13" fill="#fff" stroke="#14532d" stroke-width="3"/><path d="m78 59 9 9" stroke="#14532d" stroke-width="4" stroke-linecap="round"/></svg>
+          <div><h3 class="mb-1">Penerima tidak ditemukan</h3><p class="text-secondary mb-2">Coba ubah kata pencarian atau pilih filter lain.</p><button class="btn btn-sm btn-outline-primary" type="reset" form="filters-empty">Hapus filter</button></div>
+        </div></div>
+      </section>
+
+      <section class="content-section" aria-labelledby="form-title">
+        <div class="section-heading"><div><h2 id="form-title">Form penerima</h2><p class="small text-secondary mb-0">Contoh formulir tambah dan ubah data penerima.</p></div></div>
+        <div class="recipient-forms">
+          <article class="card" id="form-tambah">
+            <div class="card-header p-3"><h3 class="h5 mb-0">Tambah penerima</h3></div>
+            <div class="card-body">
+              <!-- DATA DINAMIS: simpan profil penerima dan akun mahasiswa. -->
+              <form class="row g-3" action="#" method="post">
+                <div class="col-12"><label class="form-label" for="nim-baru">NIM</label><input class="form-control" id="nim-baru" name="nim" placeholder="Masukkan NIM" required></div>
+                <div class="col-12"><label class="form-label" for="nama-baru">Nama</label><input class="form-control" id="nama-baru" name="nama" placeholder="Nama lengkap mahasiswa" required></div>
+                <div class="col-12"><label class="form-label" for="prodi-baru">Prodi</label><select class="form-select" id="prodi-baru" name="prodi" required><option value="">Pilih prodi</option><option>Teknik Informatika</option><option>Manajemen</option><option>Pendidikan Matematika</option><option>Akuntansi</option><option>Keperawatan</option><option>Ilmu Komunikasi</option></select></div>
+                <div class="col-md-6"><label class="form-label" for="angkatan-baru">Angkatan</label><select class="form-select" id="angkatan-baru" name="angkatan" required><option value="">Pilih tahun</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option></select></div>
+                <div class="col-md-6"><label class="form-label" for="status-baru">Status</label><select class="form-select" id="status-baru" name="status" required><option>Aktif</option><option>Cuti</option><option>Lulus</option><option>Dicabut</option><option>Mengundurkan diri</option></select></div>
+                <div class="col-12"><label class="form-label" for="username-baru">Nama pengguna akun</label><input class="form-control" id="username-baru" name="username" placeholder="Nama pengguna untuk masuk" required></div>
+                <div class="col-12"><button class="btn btn-primary w-100" type="submit">Simpan penerima</button></div>
+              </form>
+            </div>
+          </article>
+
+          <article class="card" id="form-ubah">
+            <div class="card-header p-3"><h3 class="h5 mb-0">Ubah penerima</h3></div>
+            <div class="card-body">
+              <!-- DATA DINAMIS: formulir terisi dari penerima yang dipilih admin. -->
+              <form class="row g-3" action="#" method="post">
+                <div class="col-12"><label class="form-label" for="nim-ubah">NIM</label><input class="form-control" id="nim-ubah" name="nim" value="241040183" required></div>
+                <div class="col-12"><label class="form-label" for="nama-ubah">Nama</label><input class="form-control" id="nama-ubah" name="nama" value="Nadia Putri Lestari" required></div>
+                <div class="col-12"><label class="form-label" for="prodi-ubah">Prodi</label><select class="form-select" id="prodi-ubah" name="prodi" required><option selected>Teknik Informatika</option><option>Manajemen</option><option>Pendidikan Matematika</option><option>Akuntansi</option><option>Keperawatan</option><option>Ilmu Komunikasi</option></select></div>
+                <div class="col-md-6"><label class="form-label" for="angkatan-ubah">Angkatan</label><select class="form-select" id="angkatan-ubah" name="angkatan" required><option>2025</option><option selected>2024</option><option>2023</option><option>2022</option></select></div>
+                <div class="col-md-6"><label class="form-label" for="status-ubah">Status</label><select class="form-select" id="status-ubah" name="status" required><option selected>Aktif</option><option>Cuti</option><option>Lulus</option><option>Dicabut</option><option>Mengundurkan diri</option></select></div>
+                <div class="col-12"><label class="form-label" for="username-ubah">Nama pengguna akun</label><input class="form-control" id="username-ubah" name="username" value="nadia.putri" required></div>
+                <div class="col-12"><button class="btn btn-primary w-100" type="submit">Simpan perubahan</button></div>
+              </form>
+            </div>
+          </article>
+        </div>
+      </section>
+      <footer class="page-footer">Bagian Kemahasiswaan · Tahun Akademik 2026/2027 · kemahasiswaan@kampus.ac.id</footer>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL IMPOR EXCEL: hasil berikut adalah contoh tampilan validasi baris. -->
+<dialog class="dialog-import" id="import-modal" aria-labelledby="import-title">
+  <div class="dialog-head"><div><p class="small-label text-success mb-1">IMPOR DATA</p><h2 class="h4 mb-0" id="import-title">Impor Excel penerima</h2></div><button type="button" class="btn btn-sm btn-outline-secondary" id="close-import" aria-label="Tutup modal">Tutup</button></div>
+  <div class="dialog-body">
+    <div class="card mb-3"><div class="card-body">
+      <label class="form-label" for="file-impor">Pilih berkas Excel</label>
+      <input class="form-control" id="file-impor" type="file" accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
+      <div class="form-text">Format yang didukung: .xlsx atau .xls</div>
+      <a class="d-inline-block mt-2" href="#">Unduh contoh format</a>
+    </div></div>
+    <section class="card" aria-labelledby="import-result-title">
+      <div class="card-header p-3"><h3 class="h6 mb-1" id="import-result-title">Contoh hasil impor</h3><p class="small text-secondary mb-0">4 baris diperiksa · 2 berhasil · 2 perlu diperbaiki</p></div>
+      <div class="table-responsive"><table class="table table-sm table-striped mb-0"><thead><tr><th scope="col">Baris</th><th scope="col">NIM</th><th scope="col">Hasil dan alasan</th></tr></thead><tbody>
+        <tr><td>2</td><td>241040183</td><td><span class="status-badge status-good">✓ Berhasil</span></td></tr>
+        <tr><td>3</td><td>231030421</td><td><span class="status-badge status-good">✓ Berhasil</span></td></tr>
+        <tr><td>4</td><td>221010714</td><td><span class="status-badge status-bad">! Galat</span><div class="small mt-1">NIM sudah terdaftar.</div></td></tr>
+        <tr><td>5</td><td>251020095</td><td><span class="status-badge status-bad">! Galat</span><div class="small mt-1">Kolom Angkatan harus berupa tahun yang valid.</div></td></tr>
+      </tbody></table></div>
+    </section>
+  </div>
+  <div class="dialog-foot"><button type="button" class="btn btn-outline-secondary" id="cancel-import">Batal</button><button type="button" class="btn btn-primary">Proses impor</button></div>
+</dialog>
+
+<script>
+const importDialog = document.getElementById('import-modal');
+document.getElementById('open-import').addEventListener('click', () => importDialog.showModal());
+document.getElementById('close-import').addEventListener('click', () => importDialog.close());
+document.getElementById('cancel-import').addEventListener('click', () => importDialog.close());
+importDialog.addEventListener('click', (event) => {
+  if (event.target === importDialog) importDialog.close();
+});
+</script>
+</body>
+</html>
