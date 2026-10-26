@@ -14,8 +14,6 @@ class PengaturanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'dokumentasi_tenggat_hari' => ['required', 'integer', 'between:1,7'],
-            'dokumentasi_tenggat_jam' => ['required', 'date_format:H:i'],
             'peringatan_batas_pencabutan' => ['required', 'integer', 'min:1'],
         ];
     }

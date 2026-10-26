@@ -33,7 +33,7 @@ Jalankan scheduler Laravel setiap menit memakai cron:
 * * * * * cd /path/aplikasi && php artisan schedule:run >> /dev/null 2>&1
 ```
 
-Jadwal backup harian dimulai pukul 01.15 sesuai `APP_TIMEZONE`. Pengingat dokumentasi berjalan pada jadwalnya sendiri. Periksa dengan `php artisan schedule:list` setelah deploy.
+Jadwal backup harian dimulai pukul 01.15 sesuai `APP_TIMEZONE`. Periksa dengan `php artisan schedule:list` setelah deploy.
 
 ## Membuat dan menyimpan backup
 
@@ -56,7 +56,7 @@ Lakukan pada server staging dengan database dan direktori privat kosong; jangan 
 3. Buat database staging kosong, lalu pulihkan `database.sql` menggunakan `mysql`.
 4. Pulihkan isi direktori `private/` ke `storage/app/private/` staging.
 5. Atur `.env` staging agar hanya menunjuk ke database dan berkas staging, kemudian bersihkan cache konfigurasi.
-6. Login sebagai admin dan mahasiswa uji. Periksa dashboard, nilai/KHS, foto absensi, dokumentasi, notifikasi, dan laporan.
+6. Login sebagai admin dan mahasiswa uji. Periksa dashboard, nilai/KHS, foto absensi, notifikasi, dan laporan.
 7. Catat tanggal backup, waktu pemulihan, hasil pemeriksaan, dan masalah yang ditemukan. Ulangi setelah perubahan besar pada database atau penyimpanan.
 
 Jangan tandai tugas deployment atau backup sebagai selesai sampai scheduler aktif, salinan off-site tersedia, dan pemulihan staging berhasil.

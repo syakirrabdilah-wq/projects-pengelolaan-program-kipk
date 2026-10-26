@@ -5,7 +5,7 @@
 <p>Ekspor hanya memuat data akademik dan administrasi yang diperlukan. Berkas KHS dan foto privat tidak disertakan.</p>
 
 <div class="row g-3">
-    @foreach ([['nilai', 'Rekap nilai'], ['kehadiran', 'Rekap kehadiran'], ['dokumentasi', 'Rekap dokumentasi']] as [$jenis, $judul])
+    @foreach ([['nilai', 'Rekap nilai'], ['kehadiran', 'Rekap kehadiran']] as [$jenis, $judul])
         <div class="col-12 col-lg-4">
             <section class="card h-100">
                 <div class="card-body">

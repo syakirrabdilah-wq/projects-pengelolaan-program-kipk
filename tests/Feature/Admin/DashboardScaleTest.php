@@ -60,7 +60,6 @@ class DashboardScaleTest extends TestCase
 
         $mahasiswaIds = DB::table('mahasiswa')->whereIn('nim', $nims)->orderBy('id')->pluck('id')->all();
         $semesterRows = [];
-        $documentRows = [];
         foreach ($mahasiswaIds as $mahasiswaId) {
             $semesterRows[] = [
                 'mahasiswa_id' => $mahasiswaId,
@@ -71,20 +70,9 @@ class DashboardScaleTest extends TestCase
                 'diinput_oleh' => $admin->id,
                 'created_at' => $now,
             ];
-            $documentRows[] = [
-                'mahasiswa_id' => $mahasiswaId,
-                'tahun' => $now->isoWeekYear,
-                'minggu_ke' => $now->isoWeek,
-                'file_foto' => 'private/test.jpg',
-                'status_verifikasi' => 'diterima',
-                'created_at' => $now,
-            ];
         }
         foreach (array_chunk($semesterRows, 100) as $chunk) {
             DB::table('semester_akademik')->insert($chunk);
-        }
-        foreach (array_chunk($documentRows, 100) as $chunk) {
-            DB::table('dokumentasi_mingguan')->insert($chunk);
         }
 
         $kegiatan = KegiatanPembinaan::create([
@@ -113,8 +101,7 @@ class DashboardScaleTest extends TestCase
 
         $response->assertOk()
             ->assertViewHas('ringkasan', fn (array $ringkasan) => $ringkasan['total_penerima'] === 500
-                && $ringkasan['penerima_aktif'] === 500
-                && $ringkasan['belum_kirim_dokumentasi'] === 0);
+                && $ringkasan['penerima_aktif'] === 500);
         $this->assertLessThanOrEqual(25, $queryCount, 'Dashboard harus memakai jumlah kueri tetap, bukan satu kueri per mahasiswa.');
     }
 }

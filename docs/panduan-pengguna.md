@@ -21,25 +21,24 @@
 - Sistem mengevaluasi nilai terhadap aturan yang berlaku, membuat peringatan berurutan, dan mengirim notifikasi.
 - Jika peringatan mencapai ambang pencabutan, tinjau mahasiswa terlebih dahulu. Perubahan status KIP-K menjadi dicabut tetap memerlukan tindakan dan konfirmasi admin.
 
-### Pembinaan dan dokumentasi
+### Pembinaan dan absensi
 
 - Buat kegiatan pada **Pembinaan** dan tentukan waktu buka serta tutup absensi.
-- Buka rekap kegiatan untuk memeriksa foto dan waktu absensi. Koreksi status absensi harus disertai foto.
-- Buka **Verifikasi dokumentasi** untuk menerima atau menolak kiriman. Jika menolak, tulis catatan agar mahasiswa tahu apa yang harus diperbaiki.
-- Hari dan jam tenggat dokumentasi diatur melalui **Pengaturan**. Kiriman lewat tenggat tetap diterima dan ditandai terlambat.
+- Buka rekap kegiatan untuk memeriksa foto dan waktu absensi yang dikirim mahasiswa. Pilih setujui/hadir, izin, atau tolak/alpa; admin tidak perlu mengunggah foto. Kehadiran hanya dapat disetujui jika foto absensi mahasiswa tersedia.
+- Buka rekap kegiatan untuk meninjau foto bukti yang dikirim mahasiswa dan menyetujui atau menolak absensi. Admin tidak perlu mengunggah foto.
 
 ### Laporan dan riwayat
 
-- Gunakan **Laporan** untuk mengunduh rekap nilai, kehadiran, dan dokumentasi dalam Excel atau laporan nilai semester dalam PDF.
+- Gunakan **Laporan** untuk mengunduh rekap nilai dan kehadiran dalam Excel atau laporan nilai semester dalam PDF.
 - Gunakan **Audit log** untuk menelusuri perubahan nilai, status KIP-K, aturan prestasi, dan pengaturan. Filter dapat dipakai untuk membatasi jenis data, aksi, admin, ID, atau rentang tanggal.
 
 ## Mahasiswa
 
-- **Beranda** menampilkan IPK terakhir, status KIP-K, kehadiran, peringatan, dan status dokumentasi minggu berjalan.
+- **Beranda** menampilkan IPK terakhir, status KIP-K, kehadiran, dan peringatan.
 - **Nilai saya** menampilkan nilai dan KHS milik sendiri. Mahasiswa tidak dapat mengubah nilai.
 - **Pembinaan** menampilkan jadwal. Absen hanya tersedia selama jendela waktu aktif dan memerlukan foto kegiatan; waktu dicatat oleh server.
-- **Dokumentasi** menerima satu kiriman per minggu. Periksa pratinjau foto sebelum mengirim. Kiriman yang ditolak dapat dikirim ulang setelah catatan admin dibaca.
-- **Notifikasi** menampilkan peringatan, pengingat dokumentasi, dan hasil verifikasi.
+- Saat absen pembinaan, unggah foto kegiatan sebagai bukti. Waktu absensi dicatat oleh server dan statusnya dapat ditinjau admin.
+- **Notifikasi** menampilkan peringatan dan pemberitahuan sistem.
 
 ## Bantuan dan privasi
 

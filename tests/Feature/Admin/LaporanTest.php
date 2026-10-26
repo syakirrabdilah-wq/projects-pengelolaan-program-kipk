@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Exports\DokumentasiExport;
 use App\Exports\KehadiranExport;
 use App\Exports\NilaiExport;
 use App\Models\KegiatanPembinaan;
@@ -16,7 +15,7 @@ class LaporanTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_admin_dapat_mengunduh_tiga_rekap_excel_dengan_filter_dan_chunk(): void
+    public function test_admin_dapat_mengunduh_rekap_nilai_dan_kehadiran_dengan_filter_dan_chunk(): void
     {
         $this->travelTo(now()->startOfMinute());
         Excel::fake();
@@ -60,23 +59,7 @@ class LaporanTest extends TestCase
             return true;
         });
 
-        $informatika->dokumentasiMingguan()->create([
-            'tahun' => now()->isoWeekYear,
-            'minggu_ke' => now()->isoWeek,
-            'file_foto' => 'private/dokumentasi/rahasia.jpg',
-            'status_verifikasi' => 'diterima',
-            'created_at' => now(),
-        ]);
-        $this->actingAs($admin)->get(route('admin.laporan.excel', 'dokumentasi'))->assertOk();
-        Excel::assertDownloaded('rekap-dokumentasi-'.now()->format('Ymd-His').'.xlsx', function (DokumentasiExport $export) use ($informatika) {
-            $rows = $export->query()->get();
-            $this->assertCount(1, $rows);
-            $this->assertSame($informatika->nim, $rows->first()->nim);
-            $this->assertNotContains('file_foto', $export->headings());
-            $this->assertNotContains('private/dokumentasi/rahasia.jpg', $export->map($rows->first()));
-
-            return true;
-        });
+        $this->actingAs($admin)->get('/admin/laporan/dokumentasi/excel')->assertNotFound();
     }
 
     public function test_ekspor_menolak_mahasiswa_dan_filter_dengan_format_salah(): void

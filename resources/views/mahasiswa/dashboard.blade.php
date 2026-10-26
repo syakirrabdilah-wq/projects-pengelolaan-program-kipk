@@ -47,19 +47,4 @@
     </div>
 </section>
 
-<section class="card" aria-labelledby="dokumentasi-minggu-ini-title">
-    <div class="card-body">
-        <h2 id="dokumentasi-minggu-ini-title" class="h5">Dokumentasi minggu ini</h2>
-        <p class="mb-1">Tenggat: {{ $tenggatDokumentasi->translatedFormat('l, d F Y') }} pukul {{ $tenggatDokumentasi->format('H:i') }}</p>
-        @if ($dokumentasiMingguIni)
-            <p class="mb-1">Status: <x-status-badge :status="$dokumentasiMingguIni->status_verifikasi" /></p>
-            @if ($dokumentasiTerlambat)<p>Dikirim <x-status-badge status="terlambat" label="terlambat" />.</p>@endif
-            @if ($dokumentasiMingguIni->catatan_admin)<p>Catatan admin: {{ $dokumentasiMingguIni->catatan_admin }}</p>@endif
-        @else
-            <p class="mb-1">Belum mengirim dokumentasi minggu ini.</p>
-            @if (now()->greaterThan($tenggatDokumentasi))<p class="text-danger fw-semibold">Tenggat minggu ini telah lewat.</p>@endif
-        @endif
-        <a class="btn btn-outline-primary mt-2" href="{{ route('mahasiswa.dokumentasi.index') }}">Lihat dokumentasi</a>
-    </div>
-</section>
 @endsection

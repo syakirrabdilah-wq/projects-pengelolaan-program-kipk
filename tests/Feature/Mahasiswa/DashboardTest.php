@@ -5,7 +5,6 @@ namespace Tests\Feature\Mahasiswa;
 use App\Models\AturanPrestasi;
 use App\Models\KegiatanPembinaan;
 use App\Models\Mahasiswa;
-use App\Models\Pengaturan;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -20,8 +19,6 @@ class DashboardTest extends TestCase
         $milikSaya = $this->mahasiswa($admin, 'Mahasiswa Saya', 3.20);
         $orangLain = $this->mahasiswa($admin, 'Rahasia Mahasiswa Lain', 1.10);
         AturanPrestasi::create(['ipk_minimal' => 3.00, 'berlaku_mulai' => today()]);
-        Pengaturan::create(['kunci' => 'dokumentasi_tenggat_hari', 'nilai' => '5']);
-        Pengaturan::create(['kunci' => 'dokumentasi_tenggat_jam', 'nilai' => '17:30']);
         $kegiatan = KegiatanPembinaan::create([
             'judul' => 'Pembinaan selesai',
             'tanggal' => today(),
@@ -41,7 +38,7 @@ class DashboardTest extends TestCase
             ->assertSee('Halo, Mahasiswa Saya')
             ->assertSee('3.20')
             ->assertSee('100.0%')
-            ->assertSee('Tenggat:')
+            ->assertDontSee('dokumentasi minggu ini')
             ->assertDontSee('Rahasia Mahasiswa Lain')
             ->assertDontSee('1.10');
     }
@@ -54,7 +51,7 @@ class DashboardTest extends TestCase
             ->assertOk()
             ->assertSee('Belum tersedia')
             ->assertSee('Belum ada kegiatan selesai')
-            ->assertSee('Belum mengirim dokumentasi minggu ini.');
+            ->assertDontSee('Dokumentasi minggu ini');
 
         $this->actingAs($admin)->get(route('mahasiswa.dashboard'))->assertForbidden();
     }

@@ -24,12 +24,12 @@
     <a class="brand-row" href="index.html"><span class="brand-name">Sistem Manajemen Penerima KIP-K<span class="brand-caption">Panel Kemahasiswaan</span></span></a>
     <div class="sidebar-label">Menu utama</div>
     <nav class="sidebar-nav" aria-label="Navigasi admin">
-      <a class="sidebar-link" href="admin-dashboard.html">Dashboard</a><a class="sidebar-link" href="admin-penerima.html">Data penerima</a><a class="sidebar-link" href="admin-nilai.html">Nilai akademik</a><a class="sidebar-link" href="admin-aturan.html">Aturan prestasi</a><a class="sidebar-link" href="admin-peringatan.html">Peringatan</a><a class="sidebar-link" href="admin-kegiatan.html">Kegiatan pembinaan</a><a class="sidebar-link" href="admin-verifikasi.html">Verifikasi dokumentasi</a><a class="sidebar-link active" href="admin-laporan.html" aria-current="page">Laporan</a><a class="sidebar-link" href="admin-akun.html">Akun</a><a class="sidebar-link" href="admin-pengaturan.html">Pengaturan</a>
+      <a class="sidebar-link" href="admin-dashboard.html">Dashboard</a><a class="sidebar-link" href="admin-penerima.html">Data penerima</a><a class="sidebar-link" href="admin-nilai.html">Nilai akademik</a><a class="sidebar-link" href="admin-aturan.html">Aturan prestasi</a><a class="sidebar-link" href="admin-peringatan.html">Peringatan</a><a class="sidebar-link" href="admin-kegiatan.html">Kegiatan pembinaan</a><a class="sidebar-link active" href="admin-laporan.html" aria-current="page">Laporan</a><a class="sidebar-link" href="admin-akun.html">Akun</a><a class="sidebar-link" href="admin-pengaturan.html">Pengaturan</a>
     </nav>
     <div class="sidebar-bottom">Tahun Akademik 2026/2027<br>Bagian Kemahasiswaan</div>
   </aside>
   <main class="admin-main">
-    <header class="admin-topbar"><a href="admin-verifikasi.html" class="text-decoration-none text-success me-2">Notifikasi <span class="badge text-bg-success">4</span></a><a class="user-menu" href="admin-akun.html"><span class="avatar">SA</span><span><strong>Staf Admin</strong><small class="d-block text-secondary">Administrator</small></span></a></header>
+    <header class="admin-topbar"><a class="user-menu" href="admin-akun.html"><span class="avatar">SA</span><span><strong>Staf Admin</strong><small class="d-block text-secondary">Administrator</small></span></a></header>
     <div class="admin-content">
       <section class="page-hero" aria-labelledby="page-title"><p class="small-label text-success mb-1">LAPORAN KEMAHASISWAAN</p><h1 id="page-title">Laporan</h1><p class="text-secondary mb-0">Pilih jenis laporan dan filter untuk melihat pratinjau atau mengekspor data.</p><hr class="title-rule"></section>
 
@@ -39,7 +39,7 @@
           <!-- DATA DINAMIS: opsi prodi, angkatan, dan semester diambil dari data penerima. -->
           <form id="report-form">
             <div class="report-filters">
-              <div><label class="form-label" for="report-type">Jenis laporan</label><select class="form-select" id="report-type" required><option value="nilai">Rekap nilai</option><option value="kehadiran">Rekap kehadiran</option><option value="dokumentasi">Rekap dokumentasi</option><option value="semester" selected>Laporan semester</option></select></div>
+              <div><label class="form-label" for="report-type">Jenis laporan</label><select class="form-select" id="report-type" required><option value="nilai">Rekap nilai</option><option value="kehadiran">Rekap kehadiran</option><option value="semester" selected>Laporan semester</option></select></div>
               <div><label class="form-label" for="report-program">Prodi</label><select class="form-select" id="report-program"><option value="">Semua prodi</option><option>Teknik Informatika</option><option>Manajemen</option><option>Pendidikan Matematika</option><option>Akuntansi</option><option>Keperawatan</option><option>Ilmu Komunikasi</option></select></div>
               <div><label class="form-label" for="report-cohort">Angkatan</label><select class="form-select" id="report-cohort"><option value="">Semua angkatan</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option></select></div>
               <div><label class="form-label" for="report-semester">Semester</label><select class="form-select" id="report-semester"><option value="">Semua semester</option><option>Semester 5 · 2026/2027</option><option>Semester 4 · 2025/2026</option><option>Semester 3 · 2025/2026</option></select></div>
@@ -86,11 +86,6 @@ const reportExamples = {
     title: 'Rekap kehadiran', description: 'Contoh ringkasan kehadiran kegiatan pembinaan',
     columns: ['Nama', 'NIM', 'Kegiatan', 'Hadir', 'Izin', 'Persentase'],
     rows: [{ program: 'Teknik Informatika', cohort: '2024', semester: '5', cells: ['Nadia Putri Lestari', '241040183', '12 kegiatan', '11', '1', '92%'] }, { program: 'Pendidikan Matematika', cohort: '2022', semester: '5', cells: ['Bagas Ramadhan', '221031875', '12 kegiatan', '9', '1', '75%'] }, { program: 'Manajemen', cohort: '2024', semester: '5', cells: ['Salma Nuraini', '241020317', '12 kegiatan', '8', '2', '67%'] }]
-  },
-  dokumentasi: {
-    title: 'Rekap dokumentasi', description: 'Contoh status kiriman mingguan tanpa jalur berkas privat',
-    columns: ['Nama', 'NIM', 'Minggu', 'Status', 'Waktu kirim'],
-    rows: [{ program: 'Teknik Informatika', cohort: '2024', semester: '5', cells: ['Nadia Putri Lestari', '241040183', '43 · 2026', 'Diterima', '22 Okt 2026'] }, { program: 'Pendidikan Matematika', cohort: '2022', semester: '5', cells: ['Bagas Ramadhan', '221031875', '43 · 2026', 'Menunggu', '24 Okt 2026'] }, { program: 'Manajemen', cohort: '2024', semester: '5', cells: ['Salma Nuraini', '241020317', '43 · 2026', 'Terlambat', '25 Okt 2026'] }]
   },
   semester: {
     title: 'Laporan semester', description: 'Contoh sebagian data · 120 penerima',

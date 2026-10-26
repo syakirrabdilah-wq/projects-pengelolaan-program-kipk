@@ -78,41 +78,32 @@ class AbsensiService
         }
     }
 
-    public function koreksi(Mahasiswa $mahasiswa, KegiatanPembinaan $kegiatan, string $status, UploadedFile $foto): Absensi
+    public function koreksi(Mahasiswa $mahasiswa, KegiatanPembinaan $kegiatan, string $status): Absensi
     {
-        $filePath = $this->simpanFoto($foto, $kegiatan, $mahasiswa);
-        $fileLama = null;
+        return DB::transaction(function () use ($mahasiswa, $kegiatan, $status) {
+            $absensi = Absensi::query()
+                ->where('kegiatan_id', $kegiatan->id)
+                ->where('mahasiswa_id', $mahasiswa->id)
+                ->lockForUpdate()
+                ->first();
 
-        try {
-            $absensi = DB::transaction(function () use ($mahasiswa, $kegiatan, $status, $filePath, &$fileLama) {
-                $absensi = Absensi::query()
-                    ->where('kegiatan_id', $kegiatan->id)
-                    ->where('mahasiswa_id', $mahasiswa->id)
-                    ->lockForUpdate()
-                    ->first() ?? new Absensi([
-                        'kegiatan_id' => $kegiatan->id,
-                        'mahasiswa_id' => $mahasiswa->id,
-                    ]);
+            if ($status === 'hadir' && ! $absensi?->file_foto) {
+                throw new AbsensiException('Kehadiran hanya dapat disetujui jika mahasiswa sudah mengirim foto absensi.');
+            }
 
-                $fileLama = $absensi->file_foto;
-                $absensi->fill([
-                    'status' => $status,
+            if (! $absensi) {
+                return Absensi::create([
+                    'kegiatan_id' => $kegiatan->id,
+                    'mahasiswa_id' => $mahasiswa->id,
                     'waktu' => now(config('app.timezone')),
-                    'file_foto' => $filePath,
-                ])->save();
+                    'status' => $status,
+                ]);
+            }
 
-                return $absensi;
-            });
-        } catch (Throwable $exception) {
-            Storage::disk('local')->delete($filePath);
-            throw $exception;
-        }
+            $absensi->update(['status' => $status]);
 
-        if ($fileLama && $fileLama !== $filePath) {
-            Storage::disk('local')->delete($fileLama);
-        }
-
-        return $absensi;
+            return $absensi->refresh();
+        });
     }
 
     private function simpanFoto(UploadedFile $foto, KegiatanPembinaan $kegiatan, Mahasiswa $mahasiswa): string

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\DokumentasiExport;
 use App\Exports\KehadiranExport;
 use App\Exports\NilaiExport;
 use App\Http\Controllers\Controller;
@@ -32,7 +31,6 @@ class LaporanController extends Controller
         $export = match ($jenis) {
             'nilai' => new NilaiExport($filters),
             'kehadiran' => new KehadiranExport($filters),
-            'dokumentasi' => new DokumentasiExport($filters),
         };
 
         return Excel::download($export, "rekap-{$jenis}-".now()->format('Ymd-His').'.xlsx');

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardMahasiswaService
 {
-    public function data(Mahasiswa $mahasiswa, DokumentasiService $dokumentasiService): array
+    public function data(Mahasiswa $mahasiswa): array
     {
         $semesterTerakhir = $mahasiswa->semester()->orderByDesc('semester_ke')->first();
         $aturan = AturanPrestasi::query()
@@ -27,13 +27,6 @@ class DashboardMahasiswaService
             ->where('status', 'hadir')
             ->whereIn('kegiatan_id', $kegiatanSelesai)
             ->count();
-        $tahun = $sekarang->isoWeekYear;
-        $minggu = $sekarang->isoWeek;
-        $dokumentasi = $mahasiswa->dokumentasiMingguan()
-            ->where('tahun', $tahun)
-            ->where('minggu_ke', $minggu)
-            ->first();
-
         return [
             'mahasiswa' => $mahasiswa,
             'semesterTerakhir' => $semesterTerakhir,
@@ -45,9 +38,6 @@ class DashboardMahasiswaService
             'jumlahKegiatanSelesai' => $jumlahKegiatan,
             'jumlahHadir' => $jumlahHadir,
             'persentaseKehadiran' => $jumlahKegiatan === 0 ? null : round($jumlahHadir / $jumlahKegiatan * 100, 1),
-            'dokumentasiMingguIni' => $dokumentasi,
-            'dokumentasiTerlambat' => $dokumentasi ? $dokumentasiService->terlambat($dokumentasi) : false,
-            'tenggatDokumentasi' => $dokumentasiService->tenggatMinggu($sekarang),
         ];
     }
 }

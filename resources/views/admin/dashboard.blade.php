@@ -8,7 +8,6 @@
         ['Penerima aktif', $ringkasan['penerima_aktif'], 'berstatus aktif', '✓'],
         ['Dalam peringatan', $ringkasan['dalam_peringatan'], 'perlu dipantau', '!'],
         ['Memenuhi syarat pencabutan', $ringkasan['memenuhi_syarat_pencabutan'], 'menunggu keputusan admin', '!'],
-        ['Belum kirim dokumentasi minggu ini', $ringkasan['belum_kirim_dokumentasi'], 'perlu diingatkan', '•'],
     ] as [$label, $jumlah, $keterangan, $ikon])
         <div class="col-12 col-sm-6 col-xl">
             <article class="card stat-card h-100"><div>

@@ -13,8 +13,6 @@ class DashboardAdminService
 {
     public function ringkasan(): array
     {
-        $tahun = now()->isoWeekYear;
-        $minggu = now()->isoWeek;
         $mahasiswaAktif = Mahasiswa::query()->where('status_kipk', 'aktif');
         $batasPencabutan = (int) (Pengaturan::query()
             ->where('kunci', 'peringatan_batas_pencabutan')
@@ -28,11 +26,6 @@ class DashboardAdminService
                 ->where('tingkat', '>=', $batasPencabutan)
                 ->distinct('mahasiswa_id')
                 ->count('mahasiswa_id'),
-            'belum_kirim_dokumentasi' => (clone $mahasiswaAktif)
-                ->whereDoesntHave('dokumentasiMingguan', fn ($query) => $query
-                    ->where('tahun', $tahun)
-                    ->where('minggu_ke', $minggu))
-                ->count(),
         ];
     }
 
@@ -110,20 +103,6 @@ class DashboardAdminService
             $masalah[$item->id] ??= $this->barisMasalah($item->id, $item->nama, $item->nim);
             $masalah[$item->id]['alasan'][] = 'Kehadiran rendah';
             $masalah[$item->id]['persentase_kehadiran'] = round($item->kegiatan_hadir / $item->kegiatan_selesai * 100, 1);
-        }
-
-        $tahun = now()->isoWeekYear;
-        $minggu = now()->isoWeek;
-        $belumKirim = Mahasiswa::query()
-            ->where('status_kipk', 'aktif')
-            ->whereDoesntHave('dokumentasiMingguan', fn ($query) => $query
-                ->where('tahun', $tahun)
-                ->where('minggu_ke', $minggu))
-            ->get(['id', 'nama', 'nim']);
-
-        foreach ($belumKirim as $item) {
-            $masalah[$item->id] ??= $this->barisMasalah($item->id, $item->nama, $item->nim);
-            $masalah[$item->id]['alasan'][] = 'Belum kirim dokumentasi minggu ini';
         }
 
         $daftar = array_values($masalah);
