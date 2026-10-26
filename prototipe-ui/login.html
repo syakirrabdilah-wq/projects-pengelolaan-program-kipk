@@ -15,13 +15,13 @@
     .login-state-list { display: grid; gap: 1rem; }
     .login-state-card { padding: 1.25rem; }
     .login-state-card h2 { font-family: var(--bs-font-sans-serif); font-size: 1rem; font-weight: 700; }
-    .login-state-card .state-number { display: inline-grid; width: 28px; height: 28px; place-items: center; margin-right: .45rem; border-radius: 50%; color: #14532d; background: #f0fdf4; }
+    .login-state-card .state-number { display: inline-grid; width: 28px; height: 28px; place-items: center; margin-right: .45rem; border-radius: 50%; color: #123b72; background: #eff6ff; }
     .login-state-error { border-color: #fca5a5; }
     .login-state-locked { border-color: #fcd34d; }
     .password-field { position: relative; }
     .password-field .form-control { padding-right: 6.3rem; }
-    .password-toggle { position: absolute; top: 50%; right: .45rem; min-height: 36px; padding: .25rem .5rem; transform: translateY(-50%); border: 0; border-radius: .35rem; color: #166534; background: #fff; font-size: .82rem; font-weight: 700; }
-    .password-toggle:focus-visible { outline: 3px solid rgba(21, 128, 61, .3); }
+    .password-toggle { position: absolute; top: 50%; right: .45rem; min-height: 36px; padding: .25rem .5rem; transform: translateY(-50%); border: 0; border-radius: .35rem; color: #164c91; background: #fff; font-size: .82rem; font-weight: 700; }
+    .password-toggle:focus-visible { outline: 3px solid rgba(29, 92, 168, .3); }
     .auth-visual { position: sticky; top: 0; }
     @media (max-width: 767.98px) {
       .login-preview .auth-visual { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 78px; grid-template-rows: auto auto auto; grid-template-areas: "brand brand" "title art" "welcome art"; align-content: center; justify-items: stretch; min-height: 0; gap: .1rem .6rem; padding: .85rem 1rem; }
@@ -39,14 +39,14 @@
     <section class="auth-visual" aria-labelledby="system-title">
       <a class="brand-row" href="index.html" aria-label="Sistem Manajemen Penerima KIP-K">
 
-        <span class="brand-name">Sistem Manajemen Penerima KIP-K<span class="brand-caption">Bagian Kemahasiswaan</span></span>
+        <img class="brand-logo" src="../public/images/logo%20(1).png" alt="Pengelola KIP Kuliah Kab. Tegal"><span class="brand-name">Sistem Manajemen Penerima KIP-K<span class="brand-caption">Bagian Kemahasiswaan</span></span>
       </a>
       <svg class="auth-illustration" viewBox="0 0 440 290" role="img" aria-label="Ilustrasi mahasiswa belajar bersama buku">
-        <circle cx="220" cy="144" r="124" fill="#166534"/><circle cx="322" cy="67" r="20" fill="#c9a227" opacity=".85"/><path d="M81 239h276" stroke="#bbf7d0" stroke-width="4" stroke-linecap="round"/>
-        <path d="M134 176c21-16 45-16 66 0v64c-21-16-45-16-66 0v-64Zm66 0c21-16 45-16 66 0v64c-21-16-45-16-66 0v-64Z" fill="#fff" stroke="#14532d" stroke-width="4" stroke-linejoin="round"/><path d="M149 190h35m-35 13h31m31-13h35m-35 13h31" stroke="#86c99a" stroke-width="3" stroke-linecap="round"/>
-        <path d="M105 233c0-27 13-42 35-42s35 15 35 42v8h-70v-8Z" fill="#86c99a"/><circle cx="140" cy="157" r="23" fill="#f2c7a5"/><path d="M116 157c2-21 14-33 32-30 12 2 20 12 21 27-12-1-23-6-31-14-5 9-12 14-22 17Z" fill="#14532d"/><path d="m101 143 39-20 39 20-39 20-39-20Z" fill="#c9a227"/><path d="M140 162v10m-21-29c12 4 28 4 42 0" stroke="#14532d" stroke-width="3" stroke-linecap="round"/>
-        <path d="M264 233c0-27 13-42 35-42s35 15 35 42v8h-70v-8Z" fill="#bbf7d0"/><circle cx="299" cy="157" r="23" fill="#e7b991"/><path d="M275 158c1-22 13-34 32-31 13 2 20 14 20 28-11-1-24-6-31-14-4 9-12 14-21 17Z" fill="#1f2937"/><path d="m262 143 37-20 39 20-39 20-37-20Z" fill="#f0fdf4" stroke="#14532d" stroke-width="3"/>
-        <path d="M300 239v18m-160-18v18m160-1h30m-190 0h30" stroke="#14532d" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="220" cy="144" r="124" fill="#164c91"/><circle cx="322" cy="67" r="20" fill="#f5ad24" opacity=".85"/><path d="M81 239h276" stroke="#bfdbfe" stroke-width="4" stroke-linecap="round"/>
+        <path d="M134 176c21-16 45-16 66 0v64c-21-16-45-16-66 0v-64Zm66 0c21-16 45-16 66 0v64c-21-16-45-16-66 0v-64Z" fill="#fff" stroke="#123b72" stroke-width="4" stroke-linejoin="round"/><path d="M149 190h35m-35 13h31m31-13h35m-35 13h31" stroke="#93b9e8" stroke-width="3" stroke-linecap="round"/>
+        <path d="M105 233c0-27 13-42 35-42s35 15 35 42v8h-70v-8Z" fill="#93b9e8"/><circle cx="140" cy="157" r="23" fill="#f2c7a5"/><path d="M116 157c2-21 14-33 32-30 12 2 20 12 21 27-12-1-23-6-31-14-5 9-12 14-22 17Z" fill="#123b72"/><path d="m101 143 39-20 39 20-39 20-39-20Z" fill="#f5ad24"/><path d="M140 162v10m-21-29c12 4 28 4 42 0" stroke="#123b72" stroke-width="3" stroke-linecap="round"/>
+        <path d="M264 233c0-27 13-42 35-42s35 15 35 42v8h-70v-8Z" fill="#bfdbfe"/><circle cx="299" cy="157" r="23" fill="#e7b991"/><path d="M275 158c1-22 13-34 32-31 13 2 20 14 20 28-11-1-24-6-31-14-4 9-12 14-21 17Z" fill="#1f2937"/><path d="m262 143 37-20 39 20-39 20-37-20Z" fill="#eff6ff" stroke="#123b72" stroke-width="3"/>
+        <path d="M300 239v18m-160-18v18m160-1h30m-190 0h30" stroke="#123b72" stroke-width="5" stroke-linecap="round"/>
       </svg>
       <h1 id="system-title" class="text-center">Selamat datang di ruang KIP-K</h1>
       <p class="mb-0 text-center">Sistem Manajemen Penerima KIP-K membantu Anda memantau perkembangan akademik dan pembinaan.</p>

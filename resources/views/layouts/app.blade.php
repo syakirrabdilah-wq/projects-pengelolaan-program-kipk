@@ -13,7 +13,9 @@
 @unless (request()->routeIs('login'))
 <nav class="navbar navbar-dark bg-primary mb-4 app-navbar">
     <div class="container app-navbar-inner">
-        <a class="navbar-brand app-brand me-0" href="/">KIP-K</a>
+        <a class="navbar-brand app-brand app-brand-logo me-0" href="/" aria-label="Pengelola KIP Kuliah Kab. Tegal">
+            <img src="{{ asset('images/logo (1).png') }}" alt="Pengelola KIP Kuliah Kab. Tegal">
+        </a>
         @auth
             <nav class="app-nav-links" aria-label="Navigasi utama">
                 @if (auth()->user()->role === 'admin')
@@ -56,7 +58,7 @@
     </div>
 </main>
 <footer class="app-footer bg-white">
-    <div class="container d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2">
+    <div class="container d-flex flex-column align-items-center justify-content-center gap-2 text-center">
         <span>Bagian Kemahasiswaan · Tahun Akademik 2026/2027</span>
     </div>
 </footer>

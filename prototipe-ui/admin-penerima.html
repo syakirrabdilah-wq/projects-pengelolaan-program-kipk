@@ -11,15 +11,15 @@
   <link href="assets/theme.css" rel="stylesheet">
   <style>
     .page-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .6rem; }
-    .receiver-filters { display: grid; grid-template-columns: minmax(230px, 1.6fr) repeat(3, minmax(145px, 1fr)) auto; align-items: end; gap: .75rem; padding: 1rem; border: 1px solid #d8eadc; border-radius: .5rem; background: #fff; }
+    .receiver-filters { display: grid; grid-template-columns: minmax(230px, 1.6fr) repeat(3, minmax(145px, 1fr)) auto; align-items: end; gap: .75rem; padding: 1rem; border: 1px solid #d4e0f1; border-radius: .5rem; background: #fff; }
     .receiver-filters .form-label { margin-bottom: .35rem; }
     .recipient-forms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-    .dialog-import { width: min(760px, calc(100vw - 2rem)); max-width: none; max-height: min(90vh, 900px); padding: 0; overflow: auto; border: 0; border-radius: .75rem; box-shadow: 0 16px 60px rgba(20, 83, 45, .24); }
+    .dialog-import { width: min(760px, calc(100vw - 2rem)); max-width: none; max-height: min(90vh, 900px); padding: 0; overflow: auto; border: 0; border-radius: .75rem; box-shadow: 0 16px 60px rgba(18, 59, 114, .24); }
     .dialog-import::backdrop { background: rgba(17, 24, 39, .55); }
     .dialog-head, .dialog-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; background: #fff; }
-    .dialog-head { border-bottom: 1px solid #e5f3e8; }
-    .dialog-foot { justify-content: flex-end; border-top: 1px solid #e5f3e8; }
-    .dialog-body { padding: 1.25rem; background: #f6faf7; }
+    .dialog-head { border-bottom: 1px solid #e5edf8; }
+    .dialog-foot { justify-content: flex-end; border-top: 1px solid #e5edf8; }
+    .dialog-body { padding: 1.25rem; background: #f5f8fc; }
     .empty-state-compact { display: flex; align-items: center; gap: 1rem; text-align: left; }
     .empty-state-compact svg { flex: 0 0 60px; width: 60px; height: 60px; margin: 0; }
     @media (max-width: 1100px) {
@@ -40,7 +40,7 @@
 <body>
 <div class="admin-shell">
   <aside class="admin-sidebar">
-    <a class="brand-row" href="index.html"><span class="brand-name">Sistem Manajemen Penerima KIP-K<span class="brand-caption">Panel Kemahasiswaan</span></span></a>
+    <a class="brand-row" href="index.html"><img class="brand-logo" src="../public/images/logo%20(1).png" alt="Pengelola KIP Kuliah Kab. Tegal"><span class="brand-name">Sistem Manajemen Penerima KIP-K<span class="brand-caption">Panel Kemahasiswaan</span></span></a>
     <div class="sidebar-label">Menu utama</div>
     <nav class="sidebar-nav" aria-label="Navigasi admin">
       <a class="sidebar-link" href="admin-dashboard.html">Dashboard</a>
@@ -122,7 +122,7 @@
       <section class="content-section" aria-labelledby="empty-title">
         <div class="section-heading"><div><h2 id="empty-title">Contoh keadaan kosong</h2><p class="small text-secondary mb-0">Tampilan jika tidak ada penerima yang cocok dengan pencarian.</p></div></div>
         <div class="card"><div class="card-body empty-state empty-state-compact">
-          <svg viewBox="0 0 96 72" role="img" aria-label="Ilustrasi daftar kosong"><rect x="19" y="8" width="48" height="56" rx="5" fill="#f0fdf4" stroke="#15803d" stroke-width="2"/><path d="M29 22h27M29 32h22M29 42h16" stroke="#86c99a" stroke-width="3" stroke-linecap="round"/><circle cx="69" cy="49" r="13" fill="#fff" stroke="#14532d" stroke-width="3"/><path d="m78 59 9 9" stroke="#14532d" stroke-width="4" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 96 72" role="img" aria-label="Ilustrasi daftar kosong"><rect x="19" y="8" width="48" height="56" rx="5" fill="#eff6ff" stroke="#1d5ca8" stroke-width="2"/><path d="M29 22h27M29 32h22M29 42h16" stroke="#93b9e8" stroke-width="3" stroke-linecap="round"/><circle cx="69" cy="49" r="13" fill="#fff" stroke="#123b72" stroke-width="3"/><path d="m78 59 9 9" stroke="#123b72" stroke-width="4" stroke-linecap="round"/></svg>
           <div><h3 class="mb-1">Penerima tidak ditemukan</h3><p class="text-secondary mb-2">Coba ubah kata pencarian atau pilih filter lain.</p><button class="btn btn-sm btn-outline-primary" type="reset" form="filters-empty">Hapus filter</button></div>
         </div></div>
       </section>

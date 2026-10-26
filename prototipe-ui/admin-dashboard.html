@@ -13,7 +13,7 @@
     .admin-sidebar .brand-row { min-height: 76px; margin-bottom: .75rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, .2); }
     .dashboard-page-hero { margin-bottom: 1.25rem; }
     .dashboard-page-hero .title-rule { margin-top: .85rem; margin-bottom: 0; }
-    .dashboard-footer { margin-top: 1.5rem; border-top: 1px solid #d8eadc; }
+    .dashboard-footer { margin-top: 1.5rem; border-top: 1px solid #d4e0f1; }
     .dashboard-summary { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; }
     .dashboard-summary .stat-card { height: 100%; }
     .dashboard-summary .small-label { display: block; min-height: 2.5em; }
@@ -35,7 +35,7 @@
 <body>
 <div class="admin-shell">
   <aside class="admin-sidebar">
-    <a class="brand-row" href="index.html"><span class="brand-name">Sistem Manajemen Penerima KIP-K<span class="brand-caption">Panel Kemahasiswaan</span></span></a>
+    <a class="brand-row" href="index.html"><img class="brand-logo" src="../public/images/logo%20(1).png" alt="Pengelola KIP Kuliah Kab. Tegal"><span class="brand-name">Sistem Manajemen Penerima KIP-K<span class="brand-caption">Panel Kemahasiswaan</span></span></a>
     <div class="sidebar-label">Menu utama</div>
     <nav class="sidebar-nav" aria-label="Navigasi admin">
       <a class="sidebar-link active" href="admin-dashboard.html" aria-current="page"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="5" rx="1"/><rect x="13" y="10" width="8" height="11" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/></svg>Dashboard</a>
@@ -105,12 +105,12 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script>
 const chartText = '#4b5563';
-const chartGrid = '#e7f1e9';
+const chartGrid = '#dce6f3';
 new Chart(document.getElementById('prodiChart'), {
   type: 'bar',
   data: {
     labels: ['Teknik Informatika', 'Manajemen', 'Pendidikan Matematika', 'Akuntansi', 'Keperawatan', 'Ilmu Komunikasi'],
-    datasets: [{ label: 'Jumlah penerima', data: [30, 24, 22, 18, 14, 12], backgroundColor: '#15803d', borderRadius: 5, maxBarThickness: 44 }]
+    datasets: [{ label: 'Jumlah penerima', data: [30, 24, 22, 18, 14, 12], backgroundColor: '#1d5ca8', borderRadius: 5, maxBarThickness: 44 }]
   },
   options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0, color: chartText }, grid: { color: chartGrid } }, x: { ticks: { color: chartText, maxRotation: 35, minRotation: 0 }, grid: { display: false } } } }
 });
@@ -118,7 +118,7 @@ new Chart(document.getElementById('angkatanChart'), {
   type: 'line',
   data: {
     labels: ['2022', '2023', '2024', '2025'],
-    datasets: [{ label: 'Jumlah penerima', data: [18, 32, 38, 32], borderColor: '#15803d', backgroundColor: 'rgba(21, 128, 61, .12)', pointBackgroundColor: '#14532d', pointRadius: 5, pointHoverRadius: 7, fill: true, tension: .3 }]
+    datasets: [{ label: 'Jumlah penerima', data: [18, 32, 38, 32], borderColor: '#1d5ca8', backgroundColor: 'rgba(29, 92, 168, .12)', pointBackgroundColor: '#123b72', pointRadius: 5, pointHoverRadius: 7, fill: true, tension: .3 }]
   },
   options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: chartText } } }, scales: { y: { beginAtZero: true, ticks: { precision: 0, color: chartText }, grid: { color: chartGrid } }, x: { ticks: { color: chartText }, grid: { display: false } } } }
 });
