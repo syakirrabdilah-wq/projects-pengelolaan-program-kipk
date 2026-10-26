@@ -13,9 +13,9 @@
     .notification-card { transition: border-color .15s ease, background-color .15s ease; }
     .notification-card.is-unread { border-left: 4px solid #b45309; background: #fffefa; }
     .notification-row { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: .9rem; }
-    .notification-icon { display: grid; width: 46px; height: 46px; place-items: center; border: 1px solid #d8eadc; border-radius: .65rem; color: #14532d; background: #f0fdf4; font-size: 1.2rem; font-weight: 800; }
+    .notification-icon { display: grid; width: 46px; height: 46px; place-items: center; border: 1px solid #d4e0f1; border-radius: .65rem; color: #123b72; background: #eff6ff; font-size: 1.2rem; font-weight: 800; }
     .notification-icon.warning { color: #92400e; border-color: #fcd34d; background: #fffbeb; }
-    .notification-icon.result { color: #14532d; border-color: #86efac; background: #f0fdf4; }
+    .notification-icon.result { color: #123b72; border-color: #93b9e8; background: #eff6ff; }
     .unread-state { color: #92400e; border-color: #fcd34d; background: #fffbeb; }
     .notification-message { color: #374151; }
     .empty-preview { border-style: dashed; }
@@ -26,7 +26,7 @@
 <div class="student-shell">
   <header class="student-topbar">
     <div class="container-fluid px-lg-4 student-top-inner">
-      <a class="brand-row student-brand p-0" href="mahasiswa-beranda.html"><span class="brand-name">Ruang KIP-K<span class="brand-caption">Bagian Kemahasiswaan</span></span></a>
+      <a class="brand-row student-brand p-0" href="mahasiswa-beranda.html"><img class="brand-logo" src="../public/images/logo%20(1).png" alt="Pengelola KIP Kuliah Kab. Tegal"><span class="brand-name">Ruang KIP-K<span class="brand-caption">Bagian Kemahasiswaan</span></span></a>
       <nav class="student-desktop-nav" aria-label="Navigasi mahasiswa"><a class="student-nav-link" href="mahasiswa-beranda.html">Beranda</a><a class="student-nav-link" href="mahasiswa-nilai.html">Nilai</a><a class="student-nav-link" href="mahasiswa-pembinaan.html">Pembinaan</a><a class="student-nav-link active" href="mahasiswa-notifikasi.html" aria-current="page">Notifikasi <span class="badge text-bg-success ms-1" id="navbar-unread">2</span></a></nav>
       <a class="profile-pill" href="mahasiswa-profil.html" aria-label="Profil Nadia Putri"><span class="avatar">NP</span><span class="d-none d-md-inline">Nadia Putri</span></a>
     </div>
@@ -44,7 +44,7 @@
 
     <section class="content-section" aria-labelledby="empty-title">
       <div class="section-heading"><div><h2 id="empty-title">Contoh keadaan kosong</h2><p class="small text-secondary mb-0">Tampilan jika belum ada notifikasi.</p></div></div>
-      <article class="card empty-preview"><div class="card-body empty-state"><svg viewBox="0 0 96 72" role="img" aria-label="Ilustrasi kotak masuk notifikasi kosong"><path d="M12 14h72v44H12z" fill="#f0fdf4" stroke="#15803d" stroke-width="2"/><path d="m12 20 36 24 36-24" fill="none" stroke="#86c99a" stroke-width="3"/><circle cx="73" cy="49" r="12" fill="#fff" stroke="#14532d" stroke-width="2"/><path d="m82 58 8 8" stroke="#14532d" stroke-width="3" stroke-linecap="round"/></svg><h3>Belum ada notifikasi</h3><p class="text-secondary mb-0">Informasi baru akan muncul di halaman ini.</p></div></article>
+      <article class="card empty-preview"><div class="card-body empty-state"><svg viewBox="0 0 96 72" role="img" aria-label="Ilustrasi kotak masuk notifikasi kosong"><path d="M12 14h72v44H12z" fill="#eff6ff" stroke="#1d5ca8" stroke-width="2"/><path d="m12 20 36 24 36-24" fill="none" stroke="#93b9e8" stroke-width="3"/><circle cx="73" cy="49" r="12" fill="#fff" stroke="#123b72" stroke-width="2"/><path d="m82 58 8 8" stroke="#123b72" stroke-width="3" stroke-linecap="round"/></svg><h3>Belum ada notifikasi</h3><p class="text-secondary mb-0">Informasi baru akan muncul di halaman ini.</p></div></article>
     </section>
 
     <footer class="page-footer">Bagian Kemahasiswaan · Tahun Akademik 2026/2027 · kemahasiswaan@kampus.ac.id</footer>

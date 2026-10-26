@@ -87,7 +87,7 @@
                 type: 'bar',
                 data: {
                     labels: {{ Illuminate\Support\Js::from($grafik['label_prodi']) }},
-                    datasets: [{ label: 'Jumlah penerima', data: {{ Illuminate\Support\Js::from($grafik['jumlah_prodi']) }}, backgroundColor: '#15803d' }],
+                    datasets: [{ label: 'Jumlah penerima', data: {{ Illuminate\Support\Js::from($grafik['jumlah_prodi']) }}, backgroundColor: '#1d5ca8' }],
                 },
                 options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } },
             });

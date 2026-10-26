@@ -10,17 +10,17 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/theme.css" rel="stylesheet">
   <style>
-    .warning-tabs { display: flex; flex-wrap: wrap; gap: .5rem; padding-bottom: .75rem; border-bottom: 1px solid #d8eadc; }
+    .warning-tabs { display: flex; flex-wrap: wrap; gap: .5rem; padding-bottom: .75rem; border-bottom: 1px solid #d4e0f1; }
     .warning-tabs .btn { min-width: 120px; }
     .streak { display: inline-flex; align-items: center; gap: .3rem; white-space: nowrap; }
-    .semester-chip { display: inline-grid; min-width: 36px; min-height: 32px; place-items: center; padding: .2rem .4rem; border: 1px solid #86c99a; border-radius: .4rem; color: #14532d; background: #f0fdf4; font-size: .8rem; font-weight: 700; }
-    .semester-chip + .semester-chip::before { content: ""; width: .3rem; height: 2px; margin-left: -.58rem; background: #86c99a; }
+    .semester-chip { display: inline-grid; min-width: 36px; min-height: 32px; place-items: center; padding: .2rem .4rem; border: 1px solid #93b9e8; border-radius: .4rem; color: #123b72; background: #eff6ff; font-size: .8rem; font-weight: 700; }
+    .semester-chip + .semester-chip::before { content: ""; width: .3rem; height: 2px; margin-left: -.58rem; background: #93b9e8; }
     .eligible-row { background: #fffafa !important; }
-    .revoke-dialog { width: min(560px, calc(100vw - 2rem)); max-width: none; padding: 0; border: 0; border-radius: .75rem; box-shadow: 0 16px 60px rgba(20, 83, 45, .24); }
+    .revoke-dialog { width: min(560px, calc(100vw - 2rem)); max-width: none; padding: 0; border: 0; border-radius: .75rem; box-shadow: 0 16px 60px rgba(18, 59, 114, .24); }
     .revoke-dialog::backdrop { background: rgba(17, 24, 39, .58); }
     .dialog-head, .dialog-body, .dialog-foot { padding: 1.25rem; }
     .dialog-head { border-bottom: 1px solid #fca5a5; background: #fef2f2; }
-    .dialog-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .6rem; border-top: 1px solid #e5f3e8; }
+    .dialog-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .6rem; border-top: 1px solid #e5edf8; }
     .revoke-summary { display: grid; gap: .8rem; padding: 1rem; border: 1px solid #fca5a5; border-radius: .5rem; background: #fffafa; }
     .revoke-summary .streak { flex-wrap: wrap; white-space: normal; }
     @media (max-width: 767.98px) {
@@ -34,7 +34,7 @@
 <body>
 <div class="admin-shell">
   <aside class="admin-sidebar">
-    <a class="brand-row" href="index.html"><span class="brand-name">Sistem Manajemen Penerima KIP-K<span class="brand-caption">Panel Kemahasiswaan</span></span></a>
+    <a class="brand-row" href="index.html"><img class="brand-logo" src="../public/images/logo%20(1).png" alt="Pengelola KIP Kuliah Kab. Tegal"><span class="brand-name">Sistem Manajemen Penerima KIP-K<span class="brand-caption">Panel Kemahasiswaan</span></span></a>
     <div class="sidebar-label">Menu utama</div>
     <nav class="sidebar-nav" aria-label="Navigasi admin">
       <a class="sidebar-link" href="admin-dashboard.html">Dashboard</a><a class="sidebar-link" href="admin-penerima.html">Data penerima</a><a class="sidebar-link" href="admin-nilai.html">Nilai akademik</a><a class="sidebar-link" href="admin-aturan.html">Aturan prestasi</a><a class="sidebar-link active" href="admin-peringatan.html" aria-current="page">Peringatan</a><a class="sidebar-link" href="admin-kegiatan.html">Kegiatan pembinaan</a><a class="sidebar-link" href="admin-laporan.html">Laporan</a><a class="sidebar-link" href="admin-akun.html">Akun</a><a class="sidebar-link" href="admin-pengaturan.html">Pengaturan</a>

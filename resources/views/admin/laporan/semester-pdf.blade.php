@@ -4,20 +4,22 @@
     <meta charset="utf-8">
     <title>Laporan nilai semester {{ $semester }}</title>
     <style>
-        body { font-family: DejaVu Sans, sans-serif; font-size: 10px; color: #222; }
+        body { font-family: DejaVu Sans, sans-serif; font-size: 10px; color: #1f2937; }
         h1, h2, p { margin: 0 0 8px; }
-        h1 { font-size: 16px; }
-        h2 { font-size: 13px; }
+        h1 { margin-top: 8px; color: #123b72; font-size: 16px; }
+        h2 { color: #164c91; font-size: 13px; }
         .meta { margin: 14px 0; }
+        .brand-logo { width: 165px; height: auto; }
         table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #777; padding: 6px; text-align: left; }
-        th { background: #eaf0f8; }
+        th, td { border: 1px solid #d4e0f1; padding: 6px; text-align: left; }
+        th { color: #123b72; background: #eff6ff; }
         thead { display: table-header-group; }
         tr { page-break-inside: avoid; }
         .empty { text-align: center; padding: 14px; }
     </style>
 </head>
 <body>
+    <img class="brand-logo" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/logo (1).png'))) }}" alt="Pengelola KIP Kuliah Kab. Tegal">
     <h1>{{ $namaInstansi }}</h1>
     <h2>Laporan nilai akademik semester {{ $semester }}</h2>
     <p class="meta">Tanggal cetak: {{ $tanggalCetak }}</p>
