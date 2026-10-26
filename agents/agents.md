@@ -4,7 +4,7 @@
 
 ## 1. Konteks proyek
 
-Website manajemen penerima KIP-K untuk bagian kemahasiswaan kampus. Dua peran: **admin kemahasiswaan** (tiga akun, hak sama) dan **mahasiswa penerima**. Admin menginput nilai (IPS, IPK, SKS, KHS); mahasiswa hanya melihat, melakukan absensi pembinaan, dan mengunggah dokumentasi mingguan. Sistem membuat peringatan otomatis bila IPK di bawah batas (awal 3,00) dengan tingkat berurutan (semester berturut-turut di bawah batas): 1-2 pesan peringatan evaluasi, tingkat 3 ke atas ditandai pencabutan.
+Website manajemen penerima KIP-K untuk bagian kemahasiswaan kampus. Dua peran: **admin kemahasiswaan** (tiga akun, hak sama) dan **mahasiswa penerima**. Admin menginput nilai (IPS, IPK, SKS, KHS); mahasiswa hanya melihat dan melakukan absensi pembinaan dengan foto bukti yang ditinjau admin. Sistem membuat peringatan otomatis bila IPK di bawah batas (awal 3,00) dengan tingkat berurutan (semester berturut-turut di bawah batas): 1-2 pesan peringatan evaluasi, tingkat 3 ke atas ditandai pencabutan.
 
 Stack: Laravel + MySQL + Blade + Bootstrap 5 (lihat `techstack.md`).
 

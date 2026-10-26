@@ -62,14 +62,13 @@ class DashboardTest extends TestCase
             ->assertSee($rendah->nama)
             ->assertSee('IPK di bawah batas')
             ->assertSee('Kehadiran rendah')
-            ->assertSee('Belum kirim dokumentasi minggu ini')
+            ->assertDontSee('Belum kirim dokumentasi minggu ini')
             ->assertDontSee($nonaktif->nama);
 
         $response->assertViewHas('ringkasan', fn (array $summary) => $summary['total_penerima'] === 3
             && $summary['penerima_aktif'] === 2
             && $summary['dalam_peringatan'] === 1
             && $summary['memenuhi_syarat_pencabutan'] === 1
-            && $summary['belum_kirim_dokumentasi'] === 2
         );
     }
 

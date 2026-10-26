@@ -8,7 +8,6 @@ use App\Models\Mahasiswa;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
@@ -95,51 +94,61 @@ class KegiatanPembinaanTest extends TestCase
             ->assertOk()->assertSee($mahasiswa->nama)->assertSee('Tidak hadir')->assertDontSee($cuti->nama);
     }
 
-    public function test_admin_dapat_menambah_dan_mengoreksi_status_absensi(): void
+    public function test_admin_menyetujui_atau_menolak_absensi_tanpa_mengganti_foto_dan_waktu_kiriman(): void
     {
         $admin = User::factory()->create(['role' => 'admin']);
         $kegiatan = $this->buatKegiatan($admin);
         $mahasiswa = $this->buatMahasiswa();
+        $fileFoto = "private/absensi/{$kegiatan->id}/{$mahasiswa->id}/foto-mahasiswa.jpg";
+        Storage::disk('local')->put($fileFoto, 'foto kiriman mahasiswa');
+        $waktuKirim = now()->subMinutes(10)->startOfSecond();
+        $absensi = Absensi::create([
+            'kegiatan_id' => $kegiatan->id,
+            'mahasiswa_id' => $mahasiswa->id,
+            'waktu' => $waktuKirim,
+            'status' => 'alpa',
+            'file_foto' => $fileFoto,
+        ]);
 
-        $this->actingAs($admin)->post(route('admin.kegiatan.absensi.koreksi', [$kegiatan, $mahasiswa]), ['status' => 'izin'])
-            ->assertSessionHasErrors('file_foto');
         $this->actingAs($admin)->post(route('admin.kegiatan.absensi.koreksi', [$kegiatan, $mahasiswa]), [
-            'status' => 'izin',
-            'file_foto' => UploadedFile::fake()->create('bukan-gambar.jpg', 10, 'text/plain'),
-        ])->assertSessionHasErrors('file_foto');
-        $this->assertDatabaseCount('absensi', 0);
-
-        $this->actingAs($admin)->post(route('admin.kegiatan.absensi.koreksi', [$kegiatan, $mahasiswa]), [
-            'status' => 'izin',
-            'file_foto' => $this->foto(),
+            'status' => 'hadir',
         ])
             ->assertRedirect();
-        $this->assertDatabaseHas('absensi', ['kegiatan_id' => $kegiatan->id, 'mahasiswa_id' => $mahasiswa->id, 'status' => 'izin']);
-        $absensi = Absensi::firstOrFail();
-        $fileLama = $absensi->file_foto;
-        Storage::disk('local')->assertExists($fileLama);
-        $waktuKoreksi = $absensi->waktu->format('Y-m-d H:i:s');
+        $this->assertDatabaseHas('absensi', ['id' => $absensi->id, 'status' => 'hadir', 'file_foto' => $fileFoto]);
+        $this->assertSame($waktuKirim->format('Y-m-d H:i:s'), $absensi->fresh()->waktu->format('Y-m-d H:i:s'));
+        Storage::disk('local')->assertExists($fileFoto);
 
         $this->actingAs($admin)->get(route('admin.absensi.foto', $absensi))->assertOk();
         $this->actingAs($mahasiswa->user)->get(route('admin.absensi.foto', $absensi))->assertForbidden();
 
-        $this->travelTo($absensi->waktu->copy()->addSecond());
         $this->actingAs($admin)->post(route('admin.kegiatan.absensi.koreksi', [$kegiatan, $mahasiswa]), [
-            'status' => 'hadir',
-            'file_foto' => $this->foto(),
+            'status' => 'alpa',
         ])
             ->assertRedirect();
-        $this->assertDatabaseHas('absensi', ['kegiatan_id' => $kegiatan->id, 'mahasiswa_id' => $mahasiswa->id, 'status' => 'hadir']);
+        $this->assertDatabaseHas('absensi', ['id' => $absensi->id, 'status' => 'alpa', 'file_foto' => $fileFoto]);
         $this->assertDatabaseCount('absensi', 1);
-        $this->assertNotSame($fileLama, $absensi->fresh()->file_foto);
-        Storage::disk('local')->assertMissing($fileLama);
-        $this->assertNotSame($waktuKoreksi, $absensi->fresh()->waktu->format('Y-m-d H:i:s'));
+        $this->assertSame($waktuKirim->format('Y-m-d H:i:s'), $absensi->fresh()->waktu->format('Y-m-d H:i:s'));
 
         $this->actingAs($admin)->post(route('admin.kegiatan.absensi.koreksi', [$kegiatan, $mahasiswa]), [
             'status' => 'belum_hadir',
-            'file_foto' => $this->foto(),
         ])
             ->assertSessionHasErrors('status');
+
+        $tanpaBukti = $this->buatMahasiswa();
+        $this->actingAs($admin)->post(route('admin.kegiatan.absensi.koreksi', [$kegiatan, $tanpaBukti]), [
+            'status' => 'hadir',
+        ])->assertSessionHasErrors('status');
+        $this->assertDatabaseMissing('absensi', ['kegiatan_id' => $kegiatan->id, 'mahasiswa_id' => $tanpaBukti->id]);
+
+        $this->actingAs($admin)->post(route('admin.kegiatan.absensi.koreksi', [$kegiatan, $tanpaBukti]), [
+            'status' => 'alpa',
+        ])->assertRedirect();
+        $this->assertDatabaseHas('absensi', [
+            'kegiatan_id' => $kegiatan->id,
+            'mahasiswa_id' => $tanpaBukti->id,
+            'status' => 'alpa',
+            'file_foto' => null,
+        ]);
     }
 
     public function test_rekap_mahasiswa_menampilkan_daftar_kegiatan_dan_persentase(): void
@@ -185,8 +194,4 @@ class KegiatanPembinaanTest extends TestCase
         ]);
     }
 
-    private function foto(): UploadedFile
-    {
-        return UploadedFile::fake()->image('kegiatan.png', 20, 20);
-    }
 }

@@ -13,16 +13,12 @@ class PengaturanController extends Controller
     {
         $nilai = Pengaturan::query()
             ->whereIn('kunci', [
-                'dokumentasi_tenggat_hari',
-                'dokumentasi_tenggat_jam',
                 'peringatan_batas_pencabutan',
             ])
             ->pluck('nilai', 'kunci');
 
         return view('admin.pengaturan.edit', [
             'pengaturan' => [
-                'dokumentasi_tenggat_hari' => $nilai['dokumentasi_tenggat_hari'] ?? '7',
-                'dokumentasi_tenggat_jam' => $nilai['dokumentasi_tenggat_jam'] ?? '23:59',
                 'peringatan_batas_pencabutan' => $nilai['peringatan_batas_pencabutan'] ?? '3',
             ],
         ]);

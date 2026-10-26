@@ -105,7 +105,8 @@ CREATE TABLE absensi (
     ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- 8. Dokumentasi mingguan (satu kiriman per mahasiswa per minggu)
+-- 8. Legacy dokumentasi mingguan (tidak dipakai alur aplikasi sejak 2026-10-26;
+--    tabel dipertahankan agar deployment lama tidak kehilangan data historis).
 CREATE TABLE dokumentasi_mingguan (
   id                 INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   mahasiswa_id       INT UNSIGNED NOT NULL,
@@ -167,10 +168,7 @@ CREATE TABLE audit_log (
 INSERT INTO aturan_prestasi (ipk_minimal, berlaku_mulai) VALUES (3.00, '2026-01-01');
 
 -- Nilai awal pengaturan (dapat diubah admin di dashboard)
--- dokumentasi_tenggat_hari: 1 = Senin ... 7 = Minggu
 INSERT INTO pengaturan (kunci, nilai) VALUES
-  ('dokumentasi_tenggat_hari', '7'),
-  ('dokumentasi_tenggat_jam', '23:59'),
   ('peringatan_batas_pencabutan', '3');
 
 -- Contoh query: mahasiswa yang IPK terbarunya di bawah batas yang berlaku

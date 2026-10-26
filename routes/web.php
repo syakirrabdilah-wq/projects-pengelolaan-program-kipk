@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin\AkunController;
 use App\Http\Controllers\Admin\AturanPrestasiController;
 use App\Http\Controllers\Admin\AuditLogController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Admin\DokumentasiController as AdminDokumentasiController;
 use App\Http\Controllers\Admin\KegiatanPembinaanController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\NilaiController;
@@ -13,7 +12,6 @@ use App\Http\Controllers\Admin\PengaturanController;
 use App\Http\Controllers\Admin\PeringatanController;
 use App\Http\Controllers\Auth\SessionController;
 use App\Http\Controllers\Mahasiswa\DashboardController as MahasiswaDashboardController;
-use App\Http\Controllers\Mahasiswa\DokumentasiController as MahasiswaDokumentasiController;
 use App\Http\Controllers\Mahasiswa\NilaiController as MahasiswaNilaiController;
 use App\Http\Controllers\Mahasiswa\PembinaanController;
 use App\Http\Controllers\NotifikasiController;
@@ -34,7 +32,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/{jenis}/excel', [LaporanController::class, 'excel'])
-        ->whereIn('jenis', ['nilai', 'kehadiran', 'dokumentasi'])
+        ->whereIn('jenis', ['nilai', 'kehadiran'])
         ->name('laporan.excel');
     Route::get('/laporan/pdf-semester', [LaporanController::class, 'pdfSemester'])
         ->name('laporan.pdf-semester');
@@ -55,10 +53,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/audit-log', [AuditLogController::class, 'index'])->name('audit-log.index');
     Route::put('/akun/{akun}/password', [AkunController::class, 'resetPassword'])->name('akun.password');
     Route::put('/akun/{akun}/status', [AkunController::class, 'toggleAktif'])->name('akun.status');
-    Route::get('/dokumentasi', [AdminDokumentasiController::class, 'index'])->name('dokumentasi.index');
-    Route::get('/dokumentasi/{dokumentasi}/foto', [AdminDokumentasiController::class, 'foto'])->name('dokumentasi.foto');
-    Route::get('/dokumentasi/{dokumentasi}', [AdminDokumentasiController::class, 'show'])->name('dokumentasi.show');
-    Route::post('/dokumentasi/{dokumentasi}/verifikasi', [AdminDokumentasiController::class, 'verifikasi'])->name('dokumentasi.verifikasi');
     Route::get('/rekap/mahasiswa/{mahasiswa}/kehadiran', [KegiatanPembinaanController::class, 'rekapMahasiswa'])->name('kehadiran.mahasiswa');
     Route::get('/absensi/{absensi}/foto', [KegiatanPembinaanController::class, 'foto'])->name('absensi.foto');
     Route::post('/kegiatan/{kegiatan}/absensi/{mahasiswa}', [KegiatanPembinaanController::class, 'koreksiAbsensi'])->name('kegiatan.absensi.koreksi');
@@ -78,9 +72,6 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/mahasiswa/pembinaan', [PembinaanController::class, 'index'])->name('mahasiswa.pembinaan.index');
     Route::post('/mahasiswa/pembinaan/{kegiatan}/absen', [PembinaanController::class, 'absen'])->name('mahasiswa.pembinaan.absen');
     Route::get('/mahasiswa/absensi/{absensi}/foto', [PembinaanController::class, 'foto'])->name('mahasiswa.absensi.foto');
-    Route::get('/mahasiswa/dokumentasi', [MahasiswaDokumentasiController::class, 'index'])->name('mahasiswa.dokumentasi.index');
-    Route::post('/mahasiswa/dokumentasi', [MahasiswaDokumentasiController::class, 'store'])->name('mahasiswa.dokumentasi.store');
-    Route::get('/mahasiswa/dokumentasi/{dokumentasi}/foto', [MahasiswaDokumentasiController::class, 'foto'])->name('mahasiswa.dokumentasi.foto');
 });
 
 Route::middleware(['auth', 'role:mahasiswa'])

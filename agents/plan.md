@@ -10,15 +10,14 @@
 | 1 | Autentikasi dan data penerima | 1 minggu | Login berperan, CRUD penerima, impor Excel |
 | 2 | Nilai akademik dan peringatan | 1–1,5 minggu | Input nilai + KHS oleh admin, aturan IPK, peringatan otomatis, tampilan nilai mahasiswa |
 | 3 | Pembinaan dan absensi | 1 minggu | Kegiatan, absensi dengan jendela waktu dan foto bertimestamp, rekap |
-| 4 | Dokumentasi mingguan | 1 minggu | Unggah foto, verifikasi admin, pengingat |
-| 5 | Dashboard, laporan, notifikasi | 1 minggu | Dashboard kedua peran, ekspor PDF/Excel |
-| 6 | Pengerasan dan rilis | 1 minggu | Pengujian menyeluruh, keamanan, deploy, backup |
+| 4 | Dashboard, laporan, notifikasi | 1 minggu | Dashboard kedua peran, ekspor PDF/Excel |
+| 5 | Pengerasan dan rilis | 1 minggu | Pengujian menyeluruh, keamanan, deploy, backup |
 
 Total perkiraan: sekitar 6–8 minggu.
 
 ## MVP
 
-Fase 0–4 menghasilkan MVP yang dapat dipakai: login, data penerima, nilai, peringatan, absensi, dan dokumentasi. Fase 5–6 menyempurnakan dan merilis.
+Fase 0–3 menghasilkan MVP yang dapat dipakai: login, data penerima, nilai, peringatan, dan absensi dengan foto bukti. Fase 4–5 menyempurnakan dan merilis.
 
 ---
 
@@ -48,7 +47,7 @@ Fase 0–4 menghasilkan MVP yang dapat dipakai: login, data penerima, nilai, per
 - Pengelolaan `aturan_prestasi` dengan tanggal berlaku.
 - `PeringatanService` dengan tingkat berurutan (1-2 pesan evaluasi, tingkat 3 ke atas ditandai pencabutan) dan notifikasi.
 - Tombol Cabut KIP-K oleh admin dengan konfirmasi.
-- Halaman Pengaturan admin (tenggat dokumentasi, batas pencabutan).
+- Halaman Pengaturan admin (batas pencabutan).
 - Halaman "Nilai saya" read-only beserta grafik dan unduh KHS sendiri.
 
 **Kriteria selesai:** menyimpan IPK 2,90 membuat peringatan dan notifikasi; IPK 3,20 tidak; tiga semester berturut-turut di bawah batas menandai pencabutan; mahasiswa tidak bisa mengubah atau melihat nilai orang lain.
@@ -60,26 +59,18 @@ Fase 0–4 menghasilkan MVP yang dapat dipakai: login, data penerima, nilai, per
 - Rekap kehadiran per kegiatan dan per mahasiswa.
 - Pengamanan absensi memakai jendela waktu dan foto; tanpa kode sesi, QR, atau geolokasi.
 
-**Kriteria selesai:** absen di luar jam atau tanpa foto valid ditolak; admin wajib memakai foto untuk koreksi; timestamp berasal dari server; absen ganda ditolak; rekap sesuai data.
+**Kriteria selesai:** absen di luar jam atau tanpa foto valid ditolak; admin meninjau foto dari mahasiswa dan mengoreksi status tanpa mengunggah foto baru; timestamp berasal dari server; absen ganda ditolak; rekap sesuai data.
 
-## Fase 4 — Dokumentasi mingguan
-**Tujuan:** bukti kegiatan mingguan terkumpul dan terverifikasi.
-- Unggah foto (validasi, kompres) dengan satu kiriman per minggu.
-- Antrean verifikasi admin (terima/tolak + catatan) dan kirim ulang bila ditolak.
-- Perintah terjadwal pengingat menjelang tenggat yang dibaca dari Pengaturan admin; penandaan kiriman terlambat.
-
-**Kriteria selesai:** kiriman kedua dalam minggu yang sama ditolak (kecuali setelah ditolak admin); status dan notifikasi benar.
-
-## Fase 5 — Dashboard, laporan, notifikasi
+## Fase 4 — Dashboard, laporan, notifikasi
 **Tujuan:** ringkasan dan keluaran untuk pimpinan.
 - Dashboard admin: kartu ringkasan, grafik, daftar bermasalah.
-- Dashboard mahasiswa: IPK, status, banner peringatan, kehadiran, status dokumentasi.
-- Ekspor PDF/Excel untuk nilai, kehadiran, dokumentasi.
+- Dashboard mahasiswa: IPK, status, banner peringatan, dan kehadiran.
+- Ekspor PDF/Excel untuk nilai dan kehadiran.
 - Halaman notifikasi dengan penandaan sudah dibaca.
 
 **Kriteria selesai:** laporan semester dapat diekspor dalam < 5 menit kerja admin.
 
-## Fase 6 — Pengerasan dan rilis
+## Fase 5 — Pengerasan dan rilis
 **Tujuan:** siap dipakai sungguhan.
 - Tinjau keamanan (otorisasi, unggahan, header, rate limit).
 - Tes menyeluruh dan uji pengguna dengan beberapa mahasiswa dan admin.

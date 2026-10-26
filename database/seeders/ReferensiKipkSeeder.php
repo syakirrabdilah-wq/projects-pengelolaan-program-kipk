@@ -20,14 +20,5 @@ class ReferensiKipkSeeder extends Seeder
             ['nilai' => '3'],
         );
 
-        Pengaturan::updateOrCreate(
-            ['kunci' => 'dokumentasi_tenggat_hari'],
-            ['nilai' => '7'],
-        );
-
-        Pengaturan::updateOrCreate(
-            ['kunci' => 'dokumentasi_tenggat_jam'],
-            ['nilai' => '23:59'],
-        );
     }
 }

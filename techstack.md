@@ -18,7 +18,7 @@
 | Ekspor PDF | `barryvdh/laravel-dompdf` | Laporan PDF |
 | Penyimpanan berkas | Disk privat Laravel (`storage/app/private`) | KHS dan foto tidak boleh publik |
 | Pengolahan gambar | Intervention Image (opsional) | Kompres dan ubah ukuran foto |
-| Penjadwalan | Laravel Scheduler (cron) | Pengingat dokumentasi, pembersihan |
+| Penjadwalan | Laravel Scheduler (cron) | Backup berkala dan tugas terjadwal |
 | Pengujian | PHPUnit / Pest | Uji fitur dan unit |
 | Kualitas kode | Laravel Pint | Format kode otomatis |
 | Versi kode | Git + GitHub | Riwayat dan kolaborasi |

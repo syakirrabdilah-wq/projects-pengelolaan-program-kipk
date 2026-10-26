@@ -22,7 +22,6 @@
                     <a @class(['app-nav-link', 'is-active' => request()->routeIs('admin.aturan-prestasi.*')]) href="{{ route('admin.aturan-prestasi.index') }}" @if (request()->routeIs('admin.aturan-prestasi.*')) aria-current="page" @endif>Aturan prestasi</a>
                     <a @class(['app-nav-link', 'is-active' => request()->routeIs('admin.peringatan.*')]) href="{{ route('admin.peringatan.index') }}" @if (request()->routeIs('admin.peringatan.*')) aria-current="page" @endif>Peringatan</a>
                     <a @class(['app-nav-link', 'is-active' => request()->routeIs('admin.kegiatan.*')]) href="{{ route('admin.kegiatan.index') }}" @if (request()->routeIs('admin.kegiatan.*')) aria-current="page" @endif>Pembinaan</a>
-                    <a @class(['app-nav-link', 'is-active' => request()->routeIs('admin.dokumentasi.*')]) href="{{ route('admin.dokumentasi.index') }}" @if (request()->routeIs('admin.dokumentasi.*')) aria-current="page" @endif>Verifikasi dokumentasi</a>
                     <a @class(['app-nav-link', 'is-active' => request()->routeIs('admin.laporan.*')]) href="{{ route('admin.laporan.index') }}" @if (request()->routeIs('admin.laporan.*')) aria-current="page" @endif>Laporan</a>
                     <a @class(['app-nav-link', 'is-active' => request()->routeIs('admin.pengaturan.*')]) href="{{ route('admin.pengaturan.edit') }}" @if (request()->routeIs('admin.pengaturan.*')) aria-current="page" @endif>Pengaturan</a>
                     <a @class(['app-nav-link', 'is-active' => request()->routeIs('admin.akun.*')]) href="{{ route('admin.akun.index') }}" @if (request()->routeIs('admin.akun.*')) aria-current="page" @endif>Manajemen akun</a>
@@ -31,7 +30,6 @@
                     <a @class(['app-nav-link', 'is-active' => request()->routeIs('mahasiswa.dashboard')]) href="{{ route('mahasiswa.dashboard') }}" @if (request()->routeIs('mahasiswa.dashboard')) aria-current="page" @endif>Beranda</a>
                     <a @class(['app-nav-link', 'is-active' => request()->routeIs('mahasiswa.nilai.*')]) href="{{ route('mahasiswa.nilai.index') }}" @if (request()->routeIs('mahasiswa.nilai.*')) aria-current="page" @endif>Nilai saya</a>
                     <a @class(['app-nav-link', 'is-active' => request()->routeIs('mahasiswa.pembinaan.*')]) href="{{ route('mahasiswa.pembinaan.index') }}" @if (request()->routeIs('mahasiswa.pembinaan.*')) aria-current="page" @endif>Pembinaan</a>
-                    <a @class(['app-nav-link', 'is-active' => request()->routeIs('mahasiswa.dokumentasi.*')]) href="{{ route('mahasiswa.dokumentasi.index') }}" @if (request()->routeIs('mahasiswa.dokumentasi.*')) aria-current="page" @endif>Dokumentasi</a>
                 @endif
                 <a @class(['app-nav-link', 'is-active' => request()->routeIs('notifikasi.*')]) href="{{ route('notifikasi.index') }}" @if (request()->routeIs('notifikasi.*')) aria-current="page" @endif>
                     Notifikasi @if ($jumlahNotifikasiBelumDibaca > 0)<span class="badge text-bg-light text-primary">{{ $jumlahNotifikasiBelumDibaca }} belum dibaca</span>@endif

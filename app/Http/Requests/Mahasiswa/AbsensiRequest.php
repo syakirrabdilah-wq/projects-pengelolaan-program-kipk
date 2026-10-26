@@ -43,7 +43,7 @@ class AbsensiRequest extends FormRequest
             $dimensi = @getimagesize($foto->getRealPath());
             $piksel = is_array($dimensi) ? ((int) $dimensi[0] * (int) $dimensi[1]) : 0;
 
-            if ($piksel < 1 || $piksel > (int) config('dokumentasi.piksel_maksimum')) {
+            if ($piksel < 1 || $piksel > (int) config('absensi.piksel_maksimum')) {
                 $validator->errors()->add('file_foto', 'Resolusi foto terlalu besar atau tidak valid.');
             }
         }];

@@ -1,6 +1,6 @@
 # Web Pengelolaan KIP-K
 
-Aplikasi Laravel untuk mengelola penerima KIP-K, nilai akademik, peringatan IPK, absensi pembinaan, dokumentasi mingguan, notifikasi, dan laporan. Aplikasi memiliki peran admin dan mahasiswa.
+Aplikasi Laravel untuk mengelola penerima KIP-K, nilai akademik, peringatan IPK, absensi pembinaan dengan foto bukti kehadiran, notifikasi, dan laporan. Aplikasi memiliki peran admin dan mahasiswa.
 
 ## Kebutuhan
 

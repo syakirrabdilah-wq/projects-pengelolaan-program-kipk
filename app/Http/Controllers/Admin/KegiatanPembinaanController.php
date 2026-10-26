@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\KoreksiAbsensiRequest;
 use App\Models\Absensi;
 use App\Models\KegiatanPembinaan;
 use App\Models\Mahasiswa;
+use App\Services\AbsensiException;
 use App\Services\AbsensiService;
 use Illuminate\Support\Facades\Storage;
 
@@ -72,7 +73,11 @@ class KegiatanPembinaanController extends Controller
 
     public function koreksiAbsensi(KoreksiAbsensiRequest $request, KegiatanPembinaan $kegiatan, Mahasiswa $mahasiswa, AbsensiService $absensiService)
     {
-        $absensiService->koreksi($mahasiswa, $kegiatan, $request->validated('status'), $request->file('file_foto'));
+        try {
+            $absensiService->koreksi($mahasiswa, $kegiatan, $request->validated('status'));
+        } catch (AbsensiException $exception) {
+            return back()->withErrors(['status' => $exception->getMessage()]);
+        }
 
         return back()->with('sukses', 'Status absensi mahasiswa berhasil diperbarui.');
     }

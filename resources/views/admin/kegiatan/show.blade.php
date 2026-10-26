@@ -23,18 +23,16 @@
                 @endif
             </td>
             <td>
-                <form method="POST" enctype="multipart/form-data" action="{{ route('admin.kegiatan.absensi.koreksi', [$kegiatan, $item]) }}" class="d-grid gap-2" data-confirm="Simpan koreksi absensi {{ $item->nama }}?">
+                <form method="POST" action="{{ route('admin.kegiatan.absensi.koreksi', [$kegiatan, $item]) }}" class="d-grid gap-2" data-confirm="Simpan keputusan absensi {{ $item->nama }}?">
                     @csrf
+                    <span class="small text-muted">Tinjau foto yang dikirim mahasiswa, lalu setujui atau tolak absensinya.</span>
                     <select class="form-select form-select-sm" name="status" aria-label="Status absensi {{ $item->nama }}">
-                        @foreach (['hadir' => 'Hadir', 'izin' => 'Izin', 'alpa' => 'Alpa'] as $nilai => $label)
-                            <option value="{{ $nilai }}" @selected($catatan?->status === $nilai)>{{ $label }}</option>
-                        @endforeach
+                        <option value="hadir" @selected($catatan?->status === 'hadir') @disabled(! $catatan?->file_foto && $catatan?->status !== 'hadir')>Setujui · Hadir</option>
+                        <option value="izin" @selected($catatan?->status === 'izin')>Izin</option>
+                        <option value="alpa" @selected($catatan?->status === 'alpa' || ! $catatan)>Tolak · Alpa</option>
                     </select>
-                    <label class="form-label small mb-0" for="foto-koreksi-{{ $item->id }}">Foto kegiatan (JPG/PNG, maks. 5 MB)</label>
-                    <input class="form-control form-control-sm image-preview-input" id="foto-koreksi-{{ $item->id }}" type="file" name="file_foto" accept="image/jpeg,image/png" data-preview="pratinjau-koreksi-{{ $item->id }}" data-preview-label="label-koreksi-{{ $item->id }}" required>
-                    @error('file_foto')<div class="small text-danger">{{ $message }}</div>@enderror
-                    <div class="upload-preview p-2"><span id="label-koreksi-{{ $item->id }}" class="small text-secondary">Pilih foto untuk melihat pratinjau.</span><img id="pratinjau-koreksi-{{ $item->id }}" class="img-fluid rounded d-none" alt="Pratinjau foto koreksi"></div>
-                    <button class="btn btn-sm btn-outline-primary">Simpan</button>
+                    @error('status')<div class="small text-danger">{{ $message }}</div>@enderror
+                    <button class="btn btn-sm btn-outline-primary">Simpan keputusan</button>
                 </form>
             </td>
         </tr>
@@ -59,19 +57,16 @@
                     @endif
                 </dd>
             </dl>
-            <form method="POST" enctype="multipart/form-data" action="{{ route('admin.kegiatan.absensi.koreksi', [$kegiatan, $item]) }}" class="d-grid gap-2" data-confirm="Simpan koreksi absensi {{ $item->nama }}?">
+            <form method="POST" action="{{ route('admin.kegiatan.absensi.koreksi', [$kegiatan, $item]) }}" class="d-grid gap-2" data-confirm="Simpan keputusan absensi {{ $item->nama }}?">
                 @csrf
-                <span class="form-label mb-0">Koreksi status kehadiran</span>
+                <span class="form-label mb-0">Tinjau foto mahasiswa dan putuskan absensi</span>
                 <select class="form-select" name="status" aria-label="Status absensi {{ $item->nama }}">
-                    @foreach (['hadir' => 'Hadir', 'izin' => 'Izin', 'alpa' => 'Alpa'] as $nilai => $label)
-                        <option value="{{ $nilai }}" @selected($catatan?->status === $nilai)>{{ $label }}</option>
-                    @endforeach
+                    <option value="hadir" @selected($catatan?->status === 'hadir') @disabled(! $catatan?->file_foto && $catatan?->status !== 'hadir')>Setujui · Hadir</option>
+                    <option value="izin" @selected($catatan?->status === 'izin')>Izin</option>
+                    <option value="alpa" @selected($catatan?->status === 'alpa' || ! $catatan)>Tolak · Alpa</option>
                 </select>
-                <label class="form-label small mb-0" for="foto-koreksi-mobile-{{ $item->id }}-file">Foto kegiatan (JPG/PNG, maks. 5 MB)</label>
-                <input class="form-control image-preview-input" id="foto-koreksi-mobile-{{ $item->id }}-file" type="file" name="file_foto" accept="image/jpeg,image/png" data-preview="pratinjau-koreksi-mobile-{{ $item->id }}" data-preview-label="label-koreksi-mobile-{{ $item->id }}" required>
-                @error('file_foto')<div class="small text-danger">{{ $message }}</div>@enderror
-                <div class="upload-preview p-2"><span id="label-koreksi-mobile-{{ $item->id }}" class="small text-secondary">Pilih foto untuk melihat pratinjau.</span><img id="pratinjau-koreksi-mobile-{{ $item->id }}" class="img-fluid rounded d-none" alt="Pratinjau foto koreksi"></div>
-                <button class="btn btn-outline-primary">Simpan koreksi</button>
+                @error('status')<div class="small text-danger">{{ $message }}</div>@enderror
+                <button class="btn btn-outline-primary">Simpan keputusan</button>
             </form>
         </article>
     @empty

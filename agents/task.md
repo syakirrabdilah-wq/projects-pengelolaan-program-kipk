@@ -47,9 +47,11 @@
 - [x] T-304 Rekap kehadiran per kegiatan dan per mahasiswa (FR-11)
 - [x] T-305 Koreksi status absensi oleh admin (hadir/izin/alpa)
 - [x] T-306 Tes: absen di luar jam ditolak; absen ganda ditolak
-- [x] T-307 Foto wajib untuk absensi mahasiswa dan koreksi admin, waktu dari server (FR-10, BR-05, BR-07)
+- [x] T-307 Foto wajib untuk absensi mahasiswa; admin meninjau foto kiriman dan mengoreksi status tanpa unggah foto baru (FR-10, BR-05, BR-07)
 
-## Fase 4 — Dokumentasi mingguan
+## Fase 4 — Dokumentasi mingguan (fitur dihentikan 2026-10-26)
+
+Tugas di bawah ini adalah riwayat implementasi. Alur unggah, verifikasi, pengingat, dan laporan dokumentasi mingguan telah dihapus; bukti foto dikirim saat mahasiswa absen.
 
 - [x] T-401 Form unggah foto dengan pratinjau dan validasi JPG/PNG ≤ 5 MB (FR-12)
 - [x] T-402 `DokumentasiService`: tentukan minggu ISO, satu kiriman per minggu, kirim ulang bila ditolak (BR-06)
@@ -63,8 +65,8 @@
 ## Fase 5 — Dashboard, laporan, notifikasi
 
 - [x] T-501 Dashboard admin: 5 kartu ringkasan, grafik per prodi/angkatan, dan daftar mahasiswa bermasalah (FR-15)
-- [x] T-502 Dashboard mahasiswa: IPK, status, banner peringatan, kehadiran, status dokumentasi dan tenggat (FR-16)
-- [x] T-503 Ekspor Excel: rekap nilai, kehadiran, dokumentasi dengan filter (FR-17)
+- [x] T-502 Dashboard mahasiswa: IPK, status, banner peringatan, dan kehadiran (FR-16)
+- [x] T-503 Ekspor Excel: rekap nilai dan kehadiran dengan filter (FR-17)
 - [x] T-504 Ekspor PDF nilai per semester, admin saja (FR-17)
 - [x] T-505 Halaman notifikasi kedua peran, tandai sudah dibaca, dan jumlah belum dibaca di navbar (FR-08)
 - [x] T-506 Audit log nilai, status KIP-K, aturan prestasi, dan pengaturan (FR-19, disetujui pemilik)
@@ -115,3 +117,4 @@
 - 2026-10-25 · T-002–T-007 · Verifikasi repositori, `.gitignore`, `.env.example`, dependensi Laravel/Excel/dompdf, PHP 8.2 dan ekstensi yang dibutuhkan, koneksi MySQL `db_kipk`, disk privat, seluruh migrasi, dan layout bersama admin/mahasiswa. Skema dipindah ke `database/kipk_schema.sql` dan nama DB di SQL diselaraskan dengan `.env.example`. Seeder lokal membuat tiga akun admin dari password `.env` yang di-hash, dan tidak membuat akun di luar `local`; password acak lokal disimpan hanya di `.env` yang diabaikan Git. Seeder referensi dan admin berhasil dijalankan; database menampilkan `admin1`–`admin3`. Tes: 3 tes seeder, seluruh suite (85 tes, 415 asersi), Pint lulus.
 - 2026-10-25 · T-307 · Absensi mandiri mahasiswa dan koreksi admin kini wajib menyertakan foto JPG/PNG maks. 5 MB; waktu dicatat server saat file diterima. Foto disimpan privat dengan nama acak dan hanya dapat dilihat admin atau pemilik melalui controller. Ditambahkan validasi dimensi, form unggah, tampilan bukti/timestamp, migrasi `file_foto`, tes validasi, timestamp, penggantian foto, dan otorisasi. Verifikasi: `php artisan test` (86 tes, 443 asersi), `php vendor/bin/pint --test` lulus, migrasi lokal dijalankan.
 - 2026-10-26 · T-603, T-606 · Ditambahkan indeks untuk daftar dan agregasi umum, serta uji dashboard berisi 500 mahasiswa yang membatasi jumlah query; ditulis panduan pengguna admin/mahasiswa dan panduan persiapan rilis. Pengujian beban ini mengukur jumlah query, bukan waktu respons server produksi. T-602, T-604, T-605, dan T-607 tetap terbuka sampai uji browser desktop/ponsel, deployment, pemulihan backup staging, dan UAT benar-benar dijalankan. Backup terenkripsi harian dan perintah bootstrap admin sudah disiapkan, tetapi backup/restorasi produksi belum diverifikasi.
+- 2026-10-26 · Revisi alur rekap pembinaan · Admin kini menetapkan status berdasarkan foto absensi yang sudah dikirim mahasiswa. Form koreksi tidak meminta unggah foto; koreksi mempertahankan foto dan waktu kirim asli. Persetujuan sebagai hadir ditolak jika tidak ada foto kiriman mahasiswa.

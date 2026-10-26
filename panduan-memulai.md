@@ -93,7 +93,7 @@ DB_PASSWORD=
 ADMIN_PASSWORD=isi-dengan-kata-sandi-kuat
 ```
 
-Atur **zona waktu**, karena jendela absensi dan tenggat dokumentasi bergantung padanya. Buka `config/app.php`, cari `timezone`, lalu isi sesuai wilayahmu (misalnya `Asia/Jakarta` untuk WIB).
+Atur **zona waktu**, karena jendela absensi dan timestamp foto bergantung padanya. Buka `config/app.php`, cari `timezone`, lalu isi sesuai wilayahmu (misalnya `Asia/Jakarta` untuk WIB).
 
 Pastikan `.env` tidak ikut ter-commit. File `.gitignore` bawaan Laravel sudah mengecualikannya; cek dengan `git status` nanti.
 
@@ -186,7 +186,6 @@ php artisan make:migration create_aturan_prestasi_table
 php artisan make:migration create_peringatan_table
 php artisan make:migration create_kegiatan_pembinaan_table
 php artisan make:migration create_absensi_table
-php artisan make:migration create_dokumentasi_mingguan_table
 php artisan make:migration create_notifikasi_table
 php artisan make:migration create_pengaturan_table
 ```
@@ -213,7 +212,6 @@ Untuk tabel lainnya, ikuti `database/kipk_schema.sql` (kolom, tipe, unique, dan 
 
 - `semester_akademik`: unik `(mahasiswa_id, semester_ke)`; `ips`/`ipk` dengan `decimal(3, 2)`.
 - `absensi`: unik `(kegiatan_id, mahasiswa_id)`.
-- `dokumentasi_mingguan`: unik `(mahasiswa_id, tahun, minggu_ke)`.
 - `peringatan`: unik `(mahasiswa_id, semester_id)`.
 - `pengaturan`: kunci utamanya `kunci` (string), bukan `id`.
 
@@ -236,7 +234,6 @@ php artisan make:model AturanPrestasi
 php artisan make:model Peringatan
 php artisan make:model KegiatanPembinaan
 php artisan make:model Absensi
-php artisan make:model DokumentasiMingguan
 php artisan make:model Notifikasi
 php artisan make:model Pengaturan
 ```
@@ -301,8 +298,6 @@ public function run(): void
     );
 
     $pengaturan = [
-        'dokumentasi_tenggat_hari'    => '7',      // 1 = Senin ... 7 = Minggu
-        'dokumentasi_tenggat_jam'     => '23:59',
         'peringatan_batas_pencabutan' => '3',
     ];
     foreach ($pengaturan as $kunci => $nilai) {
